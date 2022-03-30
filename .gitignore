@@ -36,6 +36,7 @@ test-website-in-workspace
 # 自定义
 netlifyDeployPreview/*
 changelog
+!src/plugins/changelog
 !netlifyDeployPreview/index.html
 !netlifyDeployPreview/_redirects
 
