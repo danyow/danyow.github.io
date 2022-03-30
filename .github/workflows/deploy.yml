@@ -2,7 +2,7 @@ name: 持续部署到Github
 
 on:
   push:
-    branches: [ main ]
+    branches: [ master ]
 
 jobs:
   deploy:
