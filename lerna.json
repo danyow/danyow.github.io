@@ -1,0 +1,18 @@
+{
+  "version": "2.0.0-beta.18",
+  "npmClient": "yarn",
+  "useWorkspaces": true,
+  "changelog": {
+    "repo": "danyow/danyow.github.io",
+    "labels": {
+      "tag: new feature": ":rocket: 新功能",
+      "tag: breaking change": ":boom: 突破性变化",
+      "tag: bug fix": ":bug: 错误修复",
+      "tag: polish": ":nail_care: 抛光",
+      "tag: documentation": ":memo: 文档",
+      "tag: internal": ":house: 内部的",
+      "tag: performance": ":running_woman: 表现"
+    },
+    "cacheDir": ".changelog"
+  }
+}
