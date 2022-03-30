@@ -1,0 +1,35 @@
+name: 持续部署到Github
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    name: 部署任务
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 1. 检出代码
+        uses: actions/checkout@v3
+      - name: 2. 设置 node 版本
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+          cache: yarn
+      - name: 3. 配置环境&构建网站
+        env:
+          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
+          # 本地化 crowdin-udb
+        run: |
+          yarn install
+          yarn build
+
+      # 目前较为流行部署到 GitHubPages 的 Action：
+      # 文档: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
+      - name: 部署到GitHub
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          # 构建输出以发布到 `gh-pages` 分支：
+          publish_dir: ./build

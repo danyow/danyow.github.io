@@ -1,0 +1,46 @@
+# 依赖关系
+/node_modules
+
+# 生产
+/build
+/scripts_build
+
+# 生成的文件
+.docusaurus
+.cache-loader
+.vscode
+.idea
+*.iml
+*.code-workspace
+.changelog
+
+.eslintcache
+
+# 杂项
+.DS_Store
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+yarn-error.log
+build
+coverage
+types
+test-website
+test-website-in-workspace
+
+# 自定义
+netlifyDeployPreview/*
+changelog
+!netlifyDeployPreview/index.html
+!netlifyDeployPreview/_redirects
+
+_dogfooding/_swizzle_theme_tests
+
+i18n/**/*
+
+.netlify
