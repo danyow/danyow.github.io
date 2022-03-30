@@ -84,16 +84,24 @@ const config = {
     },
   ],
   i18n: {
-    defaultLocale: 'zh-CN',
+    defaultLocale: 'zh-Hans',
     // eslint-disable-next-line no-nested-ternary
     locales: isDeployPreview
       ? // Deploy preview: keep it fast!
-      ['zh-CN']
+      ['zh-Hans']
       : isI18nStaging
         ? // Staging locales: https://docusaurus-i18n-staging.netlify.app/
-        ['zh-CN', 'en']
+        ['zh-Hans', 'en']
         : // Production locales
-        ['zh-CN', 'en'],
+        ['zh-Hans', 'en'],
+    localeConfigs: {
+      "zh-Hans": {
+        label: "中文",
+      },
+      en: {
+        label: "English",
+      },
+    },
   },
   webpack: {
     jsLoader: (isServer) => ({
@@ -121,7 +129,7 @@ const config = {
   },
   staticDirectories: [
     'static',
-    path.join(__dirname, '_dogfooding/_asset-tests'),
+    // path.join(__dirname, '_dogfooding/_asset-tests'),
   ],
   themes: ['live-codeblock'], //, ...dogfoodingThemeInstances],
   plugins: [
