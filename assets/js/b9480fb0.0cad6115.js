@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[8713],{4740:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","name":"whiteglass","count":1,"permalink":"/blog/tags/whiteglass"}')}}]);

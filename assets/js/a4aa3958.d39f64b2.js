@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[2068],{8741:function(a){a.exports=JSON.parse('{"permalink":"/blog/tags/mac","page":1,"postsPerPage":5,"totalPages":2,"totalCount":9,"nextPage":"/blog/tags/mac/page/2","blogDescription":"Blog","blogTitle":"Blog"}')}}]);

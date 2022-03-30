@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[2442],{3376:function(s){s.exports=JSON.parse('{"allTagsPath":"/en/blog/tags","name":"Disqus","count":1,"permalink":"/en/blog/tags/disqus"}')}}]);

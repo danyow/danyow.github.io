@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[9331],{4282:function(a){a.exports=JSON.parse('{"allTagsPath":"/blog/tags","name":"Windows","count":4,"permalink":"/blog/tags/windows"}')}}]);

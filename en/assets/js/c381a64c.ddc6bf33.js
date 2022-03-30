@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[958],{3248:function(e){e.exports=JSON.parse('{"allTagsPath":"/en/blog/tags","name":"vscode","count":1,"permalink":"/en/blog/tags/vscode"}')}}]);
