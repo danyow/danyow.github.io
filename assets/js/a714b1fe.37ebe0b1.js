@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[4199],{3909:function(o){o.exports=JSON.parse('{"allTagsPath":"/blog/tags","name":"CocosCreator","count":1,"permalink":"/blog/tags/cocos-creator"}')}}]);

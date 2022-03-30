@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[9332],{6233:function(t){t.exports=JSON.parse('{"allTagsPath":"/en/blog/tags","name":"flutter","count":1,"permalink":"/en/blog/tags/flutter"}')}}]);

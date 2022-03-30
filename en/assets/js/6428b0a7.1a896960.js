@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[9657],{2530:function(e){e.exports=JSON.parse('{"allTagsPath":"/en/blog/tags","name":"item2","count":1,"permalink":"/en/blog/tags/item-2"}')}}]);

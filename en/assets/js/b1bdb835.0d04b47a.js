@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[9350],{2039:function(e){e.exports=JSON.parse('{"plugin":{"name":"changelog-plugin","id":"default"}}')}}]);

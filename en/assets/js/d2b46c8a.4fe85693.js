@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkdanyow_github_io=self.webpackChunkdanyow_github_io||[]).push([[3832],{7389:function(o){o.exports=JSON.parse('{"permalink":"/en/blog/tags/python/page/2","page":2,"postsPerPage":5,"totalPages":2,"totalCount":6,"previousPage":"/en/blog/tags/python","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
