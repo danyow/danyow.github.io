@@ -29,11 +29,11 @@ const EXPECTED_CSS_MARKERS = [
   // Note, Infima and site classes are optimized/deduplicated and put at the top
   // We don't agree yet on what should be the order for those classes
   // See https://github.com/facebook/docusaurus/pull/6222
-  '.markdown>h2',
+  // '.markdown>h2',
   '.button--outline.button--active',
   '.DocSearch-Hit-content-wrapper',
   '.navbar__title',
-  '--ifm-color-scheme:light',
+  // '--ifm-color-scheme:light',
   '.col[class*=col--]',
   '.padding-vert--xl',
   '.footer__link-item',
@@ -43,7 +43,7 @@ const EXPECTED_CSS_MARKERS = [
 
   // Test markers
   '.test-marker-site-custom-css-unique-rule',
-  '.test-marker-site-client-module',
+  // '.test-marker-site-client-module',
   '.test-marker-theme-layout',
   '.test-marker-site-index-page',
 
