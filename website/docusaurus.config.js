@@ -21,9 +21,9 @@ const ArchivedVersionsDropdownItems = Object.entries(VersionsArchived).splice(
   5,
 );
 
+const expectedPrefix = 'v';
 // This probably only makes sense for the beta phase, temporary
 function getNextBetaVersionName() {
-  const expectedPrefix = 'v';
 
   const lastReleasedVersion = versions.find(t => t.startsWith(expectedPrefix))
   if (!lastReleasedVersion) {
@@ -38,10 +38,19 @@ function getNextBetaVersionName() {
   return `${expectedPrefix}${version + 1}`;
 }
 
+function getHomesPaths() {
+  const homes = Array.from(versions)
+  const index = homes.findIndex(t => t.startsWith(expectedPrefix))
+  if (index !== - 1) {
+    homes.splice(index, 1)
+  }
+  return homes
+}
+
 const allDocHomesPaths = [
   '/docs/',
   '/docs/next/',
-  ...versions.slice(1).map((version) => `/docs/${version}/`),
+  ...getHomesPaths().map((version) => `/docs/${version}/`),
 ];
 
 const isDev = process.env.NODE_ENV === 'development';
@@ -193,14 +202,18 @@ const config = {
           //   from: ['/'],
           //   to: '/docs',
           // },
-          {
-            from: ['/docs/Lua%205.3'],
-            to: '/docs/Lua%205.3/lua/hello'
-          },
-          {
-            from: ['/docs/unity2022.1'],
-            to: '/docs/unity2022.1/unity/glossary'
-          },
+          // {
+          //   from: ['/docs/Lua@5.3'],
+          //   to: '/docs/Lua@5.3/lua/hello'
+          // },
+          // {
+          //   from: ['/docs/Lua%205.3'],
+          //   to: '/docs/Lua%205.3/lua/hello'
+          // },
+          // {
+          //   from: ['/docs/unity2022.1'],
+          //   to: '/docs/unity2022.1/unity/glossary'
+          // },
         ],
       }),
     ],
@@ -395,17 +408,17 @@ const config = {
           height: 32,
         },
         items: [
-          {
-            type: 'doc',
-            position: 'left',
-            docId: 'placeholder',
-            label: '文档',
-          },
+          // {
+          //   type: 'doc',
+          //   position: 'left',
+          //   docId: 'placeholder',
+          //   label: '文档',
+          // },
           // {
           //   type: 'docSidebar',
           //   position: 'left',
-          //   sidebarId: 'unity',
-          //   label: 'Unity',
+          //   sidebarId: 'lua',
+          //   label: 'Lua',
           // },
           {to: 'blog', label: '博客', position: 'left'},
           {to: '/changelog', label: '日志', position: 'left'},
