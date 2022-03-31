@@ -6,7 +6,7 @@
  */
 // @ts-check
 
-const path = require('path');
+// const path = require('path');
 const versions = require('./versions.json');
 const math = require('remark-math');
 const VersionsArchived = require('./versionsArchived.json');
@@ -25,7 +25,7 @@ const ArchivedVersionsDropdownItems = Object.entries(VersionsArchived).splice(
 function getNextBetaVersionName() {
   const expectedPrefix = 'v';
 
-  const lastReleasedVersion = versions[0];
+  const lastReleasedVersion = versions.find(t => t.startsWith(expectedPrefix))
   if (!lastReleasedVersion) {
     return `${expectedPrefix}0`;
   }
@@ -131,7 +131,7 @@ const config = {
     'static',
     // path.join(__dirname, '_dogfooding/_asset-tests'),
   ],
-  themes: ['live-codeblock'], //, ...dogfoodingThemeInstances],
+  themes: ['live-codeblock'], // , ...dogfoodingThemeInstances],
   plugins: [
     [
       require.resolve('./src/plugins/changelog/index.js'),
@@ -193,14 +193,14 @@ const config = {
           //   from: ['/'],
           //   to: '/docs',
           // },
-          // {
-          //   from: ['/docs/lua5.3'],
-          //   to: '/docs/lua5.3/lua/hello'
-          // },
-          // {
-          //   from: ['/docs/unity2022.1'],
-          //   to: '/docs/unity2022.1/unity/glossary'
-          // },
+          {
+            from: ['/docs/Lua%205.3'],
+            to: '/docs/Lua%205.3/lua/hello'
+          },
+          {
+            from: ['/docs/unity2022.1'],
+            to: '/docs/unity2022.1/unity/glossary'
+          },
         ],
       }),
     ],
@@ -556,6 +556,7 @@ const config = {
       //     height: 51,
       //     href: 'https://opensource.facebook.com',
       //   },
+      // eslint-disable-next-line max-len
       //   copyright: `Copyright © ${new Date().getFullYear()} Danyow, Inc. Power by Docusaurus.`,
       // },
     }),
