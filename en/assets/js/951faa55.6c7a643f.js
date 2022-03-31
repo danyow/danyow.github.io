@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[9403],{6923:function(e){e.exports=JSON.parse('{"title":"Changelog","items":[{"title":"Unity 2022.1","permalink":"/en/changelog/Unity 2022.1"},{"title":"Lua 5.3","permalink":"/en/changelog/Lua 5.3"}]}')}}]);
