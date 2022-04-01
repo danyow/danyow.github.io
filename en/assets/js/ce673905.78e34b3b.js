@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[6614],{7749:function(e){e.exports=JSON.parse('{"permalink":"/en/blog/tags/mac/page/2","page":2,"postsPerPage":5,"totalPages":2,"totalCount":9,"previousPage":"/en/blog/tags/mac","blogDescription":"Blog","blogTitle":"Blog"}')}}]);
