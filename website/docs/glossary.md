@@ -23,3 +23,10 @@
 一个网页的一个链接一直点, 点到头回溯一点继续点
 
 ## `A*` = `AStar Search Algorithm` (A星搜索算法, 启发式搜索)
+
+
+## `JIT` = `Just-In-Time`(即时编译)
+
+## `AOT` = `Ahead-Of-Time`(提前编译)
+
+## `ARC` = `Auto Reference Counting`(自动引用计数)
