@@ -1,6 +1,6 @@
 ---
 id: placeholder
-title: Placeholder
+title: 占位符
 slug: /
 ---
 

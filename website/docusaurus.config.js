@@ -22,6 +22,7 @@ const ArchivedVersionsDropdownItems = Object.entries(VersionsArchived).splice(
 );
 
 const expectedPrefix = 'v';
+
 // This probably only makes sense for the beta phase, temporary
 function getNextBetaVersionName() {
 
@@ -41,7 +42,7 @@ function getNextBetaVersionName() {
 function getHomesPaths() {
   const homes = Array.from(versions)
   const index = homes.findIndex(t => t.startsWith(expectedPrefix))
-  if (index !== - 1) {
+  if (index !== -1) {
     homes.splice(index, 1)
   }
   return homes
@@ -198,10 +199,10 @@ const config = {
           return [];
         },
         redirects: [
-          // {
-          //   from: ['/'],
-          //   to: '/docs',
-          // },
+          {
+            from: ['/'],
+            to: '/docs',
+          },
           // {
           //   from: ['/docs/Lua@5.3'],
           //   to: '/docs/Lua@5.3/lua/hello'
@@ -381,7 +382,7 @@ const config = {
       },
       announcementBar: {
         id: 'announcementBar-2', // Increment on change
-        content: `⭐️ If you like, give it a star on <a target="_blank" rel="noopener noreferrer" href="https://github.com/danyow/danyow.github.io">GitHub</a> `,
+        content: `⭐️ <a target="_blank" rel="noopener noreferrer" href="https://github.com/danyow/danyow.github.io">如喜, 赏星</a>  ⭐️`,
       },
       prism: {
         // We need to load markdown again so that YAML is loaded before MD
@@ -408,12 +409,12 @@ const config = {
           height: 32,
         },
         items: [
-          // {
-          //   type: 'doc',
-          //   position: 'left',
-          //   docId: 'placeholder',
-          //   label: '文档',
-          // },
+          {
+            type: 'doc',
+            position: 'left',
+            docId: 'placeholder',
+            label: '贮备',
+          },
           // {
           //   type: 'docSidebar',
           //   position: 'left',

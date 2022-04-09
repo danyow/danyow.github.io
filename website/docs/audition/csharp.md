@@ -1,3 +1,10 @@
+---
+id: csharp
+title: C#
+slug: /audition/csharp
+---
+
+
 # 一问一答 (C#篇)
 
 ## 值类型与引用类型的区别?
@@ -6,34 +13,34 @@
 
 1. 数值类型
 
-   1. 整型
-      1. sbyte(System.SByte)
-      2. short(System.Int16)
-      3. int(System.Int32)
-      4. long(System.Int64)
-      5. byte(System.Byte)
-      6. ushort(System.UInt16)
-      7. uint(System.UInt32)
-      8. ulong(System.UInt64)
-      9. char(System.Char)
-   2. 浮点型
-      1. float(System.Single)，
-      2. double(System.Double)。
-   3. 高精度型
-      1. decimal(System.Decimal)
+  1. 整型
+    1. sbyte(System.SByte)
+    2. short(System.Int16)
+    3. int(System.Int32)
+    4. long(System.Int64)
+    5. byte(System.Byte)
+    6. ushort(System.UInt16)
+    7. uint(System.UInt32)
+    8. ulong(System.UInt64)
+    9. char(System.Char)
+  2. 浮点型
+    1. float(System.Single)，
+    2. double(System.Double)。
+  3. 高精度型
+    1. decimal(System.Decimal)
 2. 结构体
 
-   1. struct(直接派生于System.ValueType)
+  1. struct(直接派生于System.ValueType)
 3. bool型
 
-   1. bool(System.Boolean的别名)
+  1. bool(System.Boolean的别名)
 4. 用户定义的结构体
 5. 枚举
 
-   1. enum(派生于System.Enum)
+  1. enum(派生于System.Enum)
 6. 可空类型
 
-   1. 派生于`System.Nullable<T>`泛型结构体，T实际上是`System.Nullable<T>`的别名
+  1. 派生于`System.Nullable<T>`泛型结构体，T实际上是`System.Nullable<T>`的别名
 
 ### 引用类型(ReferenceType):
 
@@ -86,7 +93,6 @@ var builder = new StringBuilder(size);
 4. 派生类必须实现未实现的方法
 
 区别:
-
 
 | 抽象类                                  | 接口                                   |
 |--------------------------------------|--------------------------------------|
@@ -156,7 +162,8 @@ foreach (var item in ls)
 
 从性能和代码生成的角度来看，确实没有什么区别。在性能测试中，他们之间来回跳动，其中一个比另一个快，而且只有毫秒。
 
-在看后面的代码，你真的没有看到任何区别。唯一的区别是在`IL`中，它`string.Empty`使用操作码`ldsfld` 而`""`使用操作码`ldstr`，但这只是因为`string.Empty`是静态的，并且两个指令都做同样的事情。如果您查看生产的组件，则完全相同。
+在看后面的代码，你真的没有看到任何区别。唯一的区别是在`IL`中，它`string.Empty`使用操作码`ldsfld` 而`""`使用操作码`ldstr`
+，但这只是因为`string.Empty`是静态的，并且两个指令都做同样的事情。如果您查看生产的组件，则完全相同。
 
 > `C#`
 
@@ -239,21 +246,15 @@ byte e = '啊';  // 中文 错误
 byte g = 256;   // 0~255 错误
 ```
 
-$$
-1 byte = 8 bit
-$$
+$$ 1 byte = 8 bit $$
 
-$$
-1汉字 = 2byte = 16bit
-$$
+$$ 1汉字 = 2byte = 16bit $$
 
-$$
-1英文 = 1byte = 8bit
-$$
+$$ 1英文 = 1byte = 8bit $$
 
 其中byte取值范围在c#中是0~255, java中则是-128~127
 
-## 
+##  
 
 ```csharp
 以4(100)    7(0111)    8(1000)为例

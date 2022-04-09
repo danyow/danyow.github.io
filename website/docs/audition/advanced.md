@@ -1,3 +1,9 @@
+---
+id: advanced
+title: 高级
+slug: /audition/advanced
+---
+
 # 一问一答 (高级篇)
 
 [寻路相关](https://www.redblobgames.com/)
@@ -21,9 +27,7 @@
 
 ## Bellman-Ford 最短路径
 
-单源最短路径, 不适合游戏寻路, 算是算法里面的内容, 可以计算负权的图论
-适合找负环
-采用对边松弛
+单源最短路径, 不适合游戏寻路, 算是算法里面的内容, 可以计算负权的图论 适合找负环 采用对边松弛
 [视频教程](https://www.bilibili.com/video/BV1p44y1W78N)
 
 SPFA算法
