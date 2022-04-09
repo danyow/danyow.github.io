@@ -21,7 +21,7 @@ slug: /translation/luagc
   - main reason: in dynamically-typed languages, reference count adds overhead
     even if a program never allocates memory.
 
-## 自动内存管理
+### 自动内存管理
 
 - 当对象不再需要时, 自动释放掉对象占用的内存.
 - 目前市面上有两种主流方法实现用以自动内存管理:
@@ -47,7 +47,7 @@ slug: /translation/luagc
 - The collector operates on top of standard allocation functions.
 - All objects linked in a long list.
 
-## Lua GC
+### Lua的垃圾回收
 
 - `Lua` 中的所有对象都需要进行垃圾回收.
   - 表, 函数, "模块", 线程(协程)等,
@@ -74,7 +74,7 @@ slug: /translation/luagc
 - Between mark and sweep, the collector separates and resurrects objects to be
   finalized.
 
-## `Lua` 在 5.0 之前的垃圾回收
+### `Lua` 在 5.0 之前的垃圾回收
 
 - 基础的 `Mark & Sweep` 收集器.
 - 标记：遍历对象图, 从`root set`开始, 标记活对象.
@@ -95,7 +95,7 @@ slug: /translation/luagc
   - New Collection when memory use is twice the use at the end of last
     collection.
 
-## 收集器的节奏
+### 收集器的节奏
 
 - 收集器的节奏是系统性能的关键组成部分.
 - 如果一个从来都不运行的收集器, 那么其 `CPU` 成本为零, 但对内存则是巨大的成本.
@@ -110,7 +110,7 @@ slug: /translation/luagc
 - Main drawback of Mark & Sweep: pauses in the program execution during a GC
   cycle can be very long.
 
-## `Lua GC` 在 5.0 之前(缺点)
+### `Lua` 在 5.0 之前的垃圾回收(缺点)
 
 - `Mark & Sweep` 的主要缺点：在 `GC` 周期中程序执行的暂停可能会很长.
 
@@ -123,7 +123,7 @@ slug: /translation/luagc
 In version 5.1, Lua got an incremental collector. An _incremental_ collector
 interleaves the execution of the collector with the main program.
 
-## 5.1
+### 5.1
 
 在5.1版中, 采用了增量垃圾回收策略.增量垃圾回收器的垃圾回收可以逐步进行, 不需要一次性完成, 避免了对程序的长时间暂停.
 
@@ -134,7 +134,7 @@ interleaves the execution of the collector with the main program.
 - From the garbage collector's point of view, the program is just some nuisance
   changing the data it is trying to collect: the mutator!
 
-## The mutator(不稳定因素)
+### The mutator(不稳定因素)
 
 - 从垃圾回收器的角度来看, 程序自身就是一个噪音源时常改变数据导致垃圾回收操作!
 
@@ -156,7 +156,7 @@ interleaves the execution of the collector with the main program.
 
 ![图片](https://pic1.zhimg.com/v2-9a19f9bc005eb4561d827b7b385670e4_b.jpg)
 
-## 三色收集器
+### 三色收集器
 
 - 每个物体都处于三种状态之一：白色、灰色或黑色.
 - 未访问的对象被标记为白色.
@@ -175,7 +175,7 @@ interleaves the execution of the collector with the main program.
   - which may create new gray objects
 - Collection ends when there are no more gray objects.
 
-## 定义(不变量)
+### 定义(不变量)
 
 - `root set`中的对象要么为灰色, 要么为黑色.
 - 黑色的对象不会指向白色对象.
@@ -200,7 +200,7 @@ interleaves the execution of the collector with the main program.
 - It can either move forward the white object to gray or move backward the black
   object to gray.
 
-## 屏障
+### 屏障
 
 - `The mutator(不稳定因素)`可以打破黑色物体不指向白色物体的`invariant(定义)`.
   - 例如这么编写的代码: `t.x = {}`
@@ -225,7 +225,7 @@ interleaves the execution of the collector with the main program.
 - Assignment of a metatable moves a white metatable forward to gray.
   `setmetatable(obj, mt)`
 
-## 启发式处理
+### 启发式处理
 
 - 移回的灰色对象被保存在一个单独列表中, 并在之后的原子阶段才能遍历.
   - 避免对象状态的反复变更
@@ -249,7 +249,7 @@ interleaves the execution of the collector with the main program.
 - It separates objects to be finalized, resurrecting them and their graphs.
 - It clears weak tables (again?).
 
-## 原子阶段
+### 原子阶段
 
 - 增量标记操作结束后进入一个原子阶段.
 - 原子阶段遍历我们之前维护在一个独立的表中的所有"再次变为灰色"的对象.
@@ -273,7 +273,7 @@ interleaves the execution of the collector with the main program.
 - The multiplier controls the translation of bytes to GC work.
   - still somewhat mystifying
 
-## 增量收集器的节奏
+### 增量收集器的节奏
 
 - 增量收集器与`mutator(不稳定因素)`交替运行.
 - 以怎样的节奏进行呢?
@@ -295,6 +295,9 @@ interleaves the execution of the collector with the main program.
 An incremental collector reduces the length of pauses, but it does not reduce
 the overall overhead of the collector; quite the opposite.
 
+
+### 小结
+
 增量垃圾回收虽然减少了程序每次暂停的时间, 但垃圾回收操作的总时间代价和之前相比并没有减少.
 
 ---
@@ -307,7 +310,7 @@ the overall overhead of the collector; quite the opposite.
   surviving two collections, they become old.
 - In a minor collection, the collector traverses and sweeps only young objects.
 
-## 分代垃圾回收器
+### 分代垃圾回收器
 
 - 分代假设: 大多数对象很快失活.
 - 因此, 收集器可以把精力集中在新对象上.
@@ -324,7 +327,7 @@ the overall overhead of the collector; quite the opposite.
   - forward: creates too many old objects (and breaks invariant)
   - backward: breaks invariant somewhere else
 
-## 分代的定义
+### 分代的定义
 
 - 旧对象不应指向新对象.
 - 不像增量`invriant(定义)`那么容易保持.
@@ -343,7 +346,7 @@ the overall overhead of the collector; quite the opposite.
 - After two cycles, a touched object goes back to regular old, unless it is
   touched again.
 
-## 被触摸的对象
+### 被触摸的对象
 
 - 如果回退屏障检测到旧对象指向了新对象, 旧物体将被标记为已触摸, 并放入特殊列表中.
   - 和`(gray again)再次灰色列表`没什么两样
@@ -360,6 +363,8 @@ What was wrong with the generational collector in Lua 5.2?
 
 Objects had to survive one GC cycle before becoming old.
 
+### 提问
+
 - Lua 5.2的分代垃圾回收器的错误之处是？
 
 - 新对象只经历一次垃圾回收就变旧.
@@ -375,7 +380,7 @@ Objects had to survive one GC cycle before becoming old.
 
 ![](https://pic2.zhimg.com/v2-aac53cec9f897e7cd48d8cda0b2a56e5_b.jpg)
 
-## 存活一个周期
+### 存活一个周期
 
 - 实现起来比较简单.
 - 收集之后, 所有幸存的对象都会变老, 因此更改不会破坏`invriant(定义)`.
@@ -391,7 +396,7 @@ Objects had to survive one GC cycle before becoming old.
 
 ![](https://pic2.zhimg.com/v2-0eeb588f9817a55345e81beebdb1d5a9_b.jpg)
 
-## 存活两个周期
+### 存活两个周期
 
 - 在一个收集之后, 一些新对象变为旧对象, 一些则不变.
   - 打破了`invriant(定义)`
@@ -407,11 +412,10 @@ Objects had to survive one GC cycle before becoming old.
   - batch programs
 - Testing a collector is hard.
 
-## 总结
+### 总结
 
 - 如果分代的假设成立, 分代垃圾回收器可以减少垃圾回收的代价.
 - 这个假设并不总是成立的.
   - 仅仅是对于批处理脚本来说很多时候这个假设就不成立
 - 对于垃圾回收器的好坏评估较为困难.
 
-![](https://pic4.zhimg.com/v2-2c14270e493a600ea9f69769a1bdf8df_b.jpg)

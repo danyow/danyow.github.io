@@ -413,7 +413,7 @@ const config = {
             type: 'doc',
             position: 'left',
             docId: 'placeholder',
-            label: '贮备',
+            label: '储备',
           },
           // {
           //   type: 'docSidebar',
