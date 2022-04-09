@@ -29,3 +29,7 @@
 ## `AOT` = `Ahead-Of-Time`(提前编译)
 
 ## `ARC` = `Auto Reference Counting`(自动引用计数)
+
+## `GCJ` = `GNU Compiler for the Java Programing Language`(GNU Java语言编译器)
+
+能将`Java`源文件编译成`Java`字节码文件或者直接将`Java`源文件编译为本地机器码, 它也能够将`Java`字节码文件编译为本地机器码
