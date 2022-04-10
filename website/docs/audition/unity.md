@@ -100,6 +100,8 @@ $$
 
 ## `Unity`从唤醒到销毁有一段生命周期, 请列出系统自己调用的几个重要方法.
 
+![](https://raw.githubusercontent.com/danyow/picgo/main/20220410193239.png)
+
 `Awake` -> `OnEnable` -> `Start` ->`Update` -> `FixedUpdate` -> `LateUpdate`
 -> `OnDisable` -> `OnDestroy`
 
@@ -123,3 +125,33 @@ $$
 
 1. 已经分配出去的内存，但没有人在引用它的情况下，不一定能收的回来。
 2. 没有分配使用的内存，当想去分配使用的时候，也不一定用的了。
+
+
+## 动态加载资源的方式
+
+1. `Resources.Load`
+  - 只能加载`Resources`下的资源
+2. 网络请求`WWW(弃用)`或者`UnityWebRequest`
+  - 任意位置, 比方远程服务器
+  - 或者本地路径
+3. `AssetBundle.LoadFromFile`
+4. `Addressable`
+  - 3是4的底层实现
+
+## 坐标空间
+
+确保矩阵线性/仿射变换的便利
+
+1. 模型空间(局部空间/对象空间) 左手系
+2. 世界空间
+3. 观察空间
+4. 剪裁空间
+  - 正交到透视
+5. 屏幕空间
+6. ~~切线空间~~
+
+[Shader入门（8）各种坐标空间的定义和变换演示](https://blog.csdn.net/jiumaol/article/details/105281257)
+
+
+## 生命周期方法可以用协程返回
+
