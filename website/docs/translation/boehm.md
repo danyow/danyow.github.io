@@ -30,7 +30,7 @@ slug: /translation/boehm
 - 实现细节和问题
   - 核心回收器
   - 增强功能
-- 经验和一些测量
+- 经验和一些测试
 
 ---
 
@@ -50,24 +50,26 @@ slug: /translation/boehm
 - A leak detector for programs that call free().
   - Unreachable unfreed memory is a memory leak.
 
-### 这是怎么一回事？
+### 他是什么？
 
-- 一个用以取代`malloc()`的垃圾回收器。
+- 一个可以替代`C`中`malloc()`的垃圾回收器。
     - 对`free()`的调用是可选的。
-    - "不可达"内存会自动回收，并提供特性 `malloc()`用以调用。
+    - 不可达内存会自动回收，并提供特性 `malloc()`用以调用。
 - 一个跟踪（`Marks&Weep`）垃圾回收器。
-    - 周期性地通过`following pointers`来确定哪些对象指针是可达的。
+    - 它定期确定可以通过跟随指针判断哪些对象可达。
     - 也可以用于其他目的。
 - 一个简单的方法将该垃圾回收加入到运行时系统.
     - 易于接口。
     - 与`C/C++`代码交互良好。
     - `GCJ（Java）`、`Mono（C#, .NET）`、`Bigloo（Scheme）`、`MzScheme`。
-- 当作为内存泄漏检测器时可用于调用`free()`接口
-    - 不可达的未释放内存是一种内存泄漏。
+- 用于调用 `free()` 的程序的泄漏检测器。
+    - 不可达的并且未释放内存是内存泄漏。
 
 `GCJ` = `GNU Compiler for the Java Programing Language`(GNU Java语言编译器)
 
-能将`Java`源文件编译成`Java`字节码文件或者直接将`Java`源文件编译为本地机器码, 它也能够将`Java`字节码文件编译为本地机器码
+- `Java`源文件 -> `Java`字节码文件
+- `Java`源文件 -> `Java`本地机器码
+- `Java`字节码文件 -> `Java`本地机器码
 
 `Bigloo`: `Bigloo是一个高效的Scheme语言编程环境`
 
@@ -115,7 +117,7 @@ int main()
 
 ### 示例：`Lisp S-expressions`
 
-... 看不懂
+替换 `malloc()` 为 `GC_MALLOC()`?
 
 ---
 
@@ -135,9 +137,13 @@ int main()
 
 ### 它是从哪里来的？
 
+- 作为 `Russell` 编程语言的简单 `GC` 开始生活（约 1980 年）。（德默斯是原作者。）
+- 后来（大约 1985 年？）更改为删除对生成代码的限制，并允许在编译器本身中使用。
+  - 消除手动引用计数的无休止调试。
 - 用于具有高阶函数的语言的学生编译器。
-- 马克·韦瑟（Mark Weiser）探索了用作泄漏检测器的方法
-- 
+- `Mark Weiser` 探索了用作检漏仪的用途（约 1986 年）。
+- 80 年代后期的 `Xerox Cedar GC` 变体取代了引用计数收集器。
+- 与 `Doug McIlroy` 为 `C` 编写的早期垃圾收集器无关，并且显然位于 `malloc` 之上。
 
 ---
 
@@ -160,19 +166,26 @@ int main()
 
 ### 它还能做什么？
 
-- 20年的爬行特征，包括：
-  - 在对象变得不可达后调用`finalizer`。
+- 20年来的缓慢支持，包括：
+  - 在对象变得不可达后调用终结器。
   - 支持在运行时系统中使用。
-    - 如果编译器想要帮助，它可以。
-  - 支持 `heap` 调试。
-    - `heap`里有什么？
+    - 如果编译器也需要帮助，它可以做到。
+  - 支持 堆 调试。
+    -  堆 里有什么？
     - 为什么它还在那里？它怎么还能被引用？
   - 支持线程和多处理器`GC`。
     - 也许是一种能在多处理器上加速标准`C`应用程序的新方式？
   - 减少`GC`暂停的各种机制：
     - 增量（但不是硬实时）`GC`。
-    - 分代`GC`将精力集中在年轻物体上。
+    - 将精力集中在年轻对象上的分代 `GC`.(但是对象并不会移动.)
     - 可中止回收过程。
+  
+这里说明了, 该算法并不打算把对象拷贝来拷贝去的.
+
+对于机身性能还没溢出的产品上, 使用该`GC`算法, 可以说是一个比较好的方案了.
+
+比如手机.
+
 ---
 
 ## What can't it do?
@@ -189,15 +202,15 @@ int main()
 
 ### 它不能做什么?
 
-- 立即回收内存或调用`finalizers/destructors`函数。
+- 立即回收内存或调用终结器/析构函数。
   - 与所有跟踪垃圾收集器一样，它只是偶尔检查不可达内存.
-  - 同步`heap finalizers`也坏了...
+  - 无论如何, 同步堆终结器都被破坏了...
 - 回收所有所有不可达对象。
-  - 一般来说，有些人仍会将指向它们的指针存储在某个地方。
+  - 一般来说，一些人仍然会在某处存储指向它们的指针。
   - `GC`不知道将引用哪些寄存器。
   - 还有其他问题...
-  - 不可达起始也是不很明确的定义...
-  - 但我们通常避免不断增加的泄漏。
+  - 不可达其实也是不很明确的定义...
+  - 但我们通常会避免越来越多的泄漏。
 
 ---
 
@@ -214,20 +227,37 @@ int main()
     - **And we never move any objects.**
   - **May lead to accidental retention of garbage objects.**
 
-## 与`C`打交道：保守的垃圾收集
+### 与`C`打交道：保守的垃圾收集
 
-- 对于`C/C++`程序，我们可能不知道指针变量（根）在哪里。
+- 对于`C/C++`程序，我们可能不知道指针变量（`root set`）在哪里。
   - 我们可能需要使用标准编译器。（优化有点风险，但是很受欢迎。）
-  - 程序可以使用`C`的联合。
+  - 程序可以使用`C`的`union`(联合)。
 - 甚至堆对象的布局也可能是未知的。
-- 如果指针位置信息是可选的。那么构建`Java/Scheme/ML...`编译器就容易多了.
-> 注意: 不确定性
+- 如果指针位置信息是可选的。那么构建`Java/Scheme/ML...`编译器就会更容易.
 - **保守收集器处理指针位置不确定性：**
-  - **_如果它可能是一个指针，它将被视为一个指针。_**
-  - **不移动引用不明确的对象。**
-    - **我们从不移动任何物体。**
-  - **可能会导致垃圾物体意外滞留。**
+  - **_如果它可能是一个指针，则将其视为指针。_**
+  - **不移动具有不明确引用的对象。**
+    - **毕竟, 我们从不移动任何物体。**
+  - **可能会导致垃圾对象的意外保留。**
 
+> 引用 [高川老师](https://www.bilibili.com/video/BV1r44y1z7X3?p=2&t=38m56s) 演讲时候的话, 
+
+在保守内存回收器来看，当回收一个内存块的时候，会尝试找到内存块下边所有的指针指向的地址，并且标记为引用。比如说 `Object a` 引用了 `Object b` ，当 `Object a` 不能回收的时候，会同时标记 `Object b` 也不能被回收。
+
+![](https://raw.githubusercontent.com/danyow/picgo/main/20220410092737.png)
+
+- 如何知道这个东西是一个数还是一个指针的？
+- 靠猜!
+
+这有一个 `potential pointer`潜在指针，并不知道它是不是真的指针，而以一个 `pattern` 的方式来检查当前这个数有没有可能是一个指针。
+
+比如说第一个指针，检查`0x011`这个数值所指向的地址里边有没有东西，若有就标记成 1 ，这次不回收。`0x012` 指向了 `Object c`， `Object c` 和 `Object a` 没有应用依赖关系，但是它恰好分配到了这块内存上。
+
+对于贝母来说，指的这块地方，有东西不回收。`0x013` 指向了一块没用的内存。
+
+贝母垃圾回收会把这个地址加到黑名单里。当下次进行大内存分配的时候，刚好踩到了这个地址的时候，贝母会告诉你这块内存不能用，贝母把它先留下了，你再去分配一块。
+
+这就是非精准，对于要回收的内存，它可能收不回来，对于没用的内存，它也可能不让用。
 
 ---
 
@@ -249,12 +279,12 @@ Debugging support: GC_xyz() vs. GC_XYZ() functions:
 
 调试支持：`GC_xyz()` vs. `GC_XYZ()`:
 
-- `GC_xyz()` 是一个实实在在的方法.
-- `GC_XYZ(x)` 扩展到任何一个 `GC_xyx(x)` or `GC_debug_xyz(x, <source position, etc>)`
-- 客户应该:
+- `GC_xyz()` 是真正的函数.
+- `GC_XYZ(x)` 展开为 `GC_xyx(x)` or `GC_debug_xyz(x, <source position, etc>)`
+- 客户端应该:
   - 使用全大写版本。
   - 始终包括 `gc.h`
-  - 在包含`gc.h`之前定义`GC_DEBUG`用于调试。
+  - 在包含`gc.h`进行调试之前定义`GC_DEBUG`。
 - 这正在成为过时的技术。
   - 需要太多的重新编译。
   - `Libunwind`、`addr2line` 允许更好的选择。
@@ -292,18 +322,18 @@ Debugging support: GC_xyz() vs. GC_XYZ() functions:
 - `GC_MALLOC_ATOMIC(bytes)`
   - 分配无指针或未跟踪（但已回收过）内存。
 - `GC_MALLOC_UNCOLLECTABLE(bytes)`
-  - 分配无法回收的（但跟踪过）的内存。
+  - 分配无法回收的（但已跟踪）的内存。
 - `GC_REALLOC(p, bytes)`
 - `GC_REGISTER_FINALIZER(...)`
-  - 当对象处于"不可达"状态时调用以添加到 (或 注销 或 检索) `finalizer` 
-  - 不像 `Java`, 默认情况下, 如果可以从其他`finalizer`索引到对象，则该对象是可达的。 (还有`Java`变体.)
+  - 注册（或注销或检索）"终结器"代码以在对象"不可达"时调用。
+  - 与 `Java` 不同，默认情况下，如果可以从其他终结器引用对象，则该对象是可访问的。（ `Java` 变体也是。）
 - `GC_INIT() `
-  - 在大多数平台上都是可选的。 (必须从主程序调用)
+  - 在大多数平台上都是可选的。 (必须在少数情况下从主程序调用。)
 - `GC_FREE()`  
   - 如果你坚持. (通常对大对象有帮助，对小对象有伤害.)
 - `GC_MALLOC_IGNORE_OFF_PAGE()` 
-  - 像是 `GC_MALLOC()`, 但对于指针指向（接近）大型数组。
-- 加上统计数据、增量GC控制、更多分配器变量、堆限制、`GC`频率控制、快速内联分配器等。
+  - 与`GC_MALLOC()`类似, 但用于指针指向（接近）开头的大型数组。
+- 加上统计数据、增量`GC`控制、更多分配器变量、堆限制、`GC`频率控制、快速内联分配器等。
 
 ---
 
@@ -324,18 +354,18 @@ Debugging support: GC_xyz() vs. GC_XYZ() functions:
   - Replacing global operator new seems problematic for many compilers.
 
 
-## `C++`接口
+### `C++`接口
 - "`gc_cpp.h`"提供了一个基类`gc`：
-  - 为`gc`的子类重写`new`方法当 `GC_MALLOC`。
-  - 重写`new::`方法 `GC_MALLOC_UNCOLLECTABLE`。
-  - 提供将`destructor`函数注册为`finalizer`的`gc_cleanup`类。
-  - 由赫尔的德特勒夫斯建造，基于埃利斯的德特勒夫斯作品。
+  - 为 `gc` 的子类覆盖 `new` 为 `GC_MALLOC`。
+  - 将 `::new` 覆盖为 `GC_MALLOC_UNCOLLECTABLE`。
+  - 提供将析构函数注册为终结器的 `gc_cleanup` 类。
+  - `Detlefs` 由赫尔的 `Detlefs` 建造，基于 `Ellis`，`Detlefs` 工作。
   - ...
 - "`gc_allocator.h`"定义`STL`分配器：
   - `gc_allocator`
   - `traceable_allocator`(可追踪分配器)
-- 尤其是`gc_cpp.h`令人恼火的脆弱。
-  - 也许比我们稍后将暗示的一些粗俗的黑客行为更重要。
+- 尤其是`gc_cpp.h`非常脆弱。
+  - 也许比我们稍后会暗示的一些严重的黑客攻击更重要。
   - 对许多编译器来说，替换全局运算符`new`似乎有问题。
 
 ---
@@ -386,10 +416,11 @@ Occasionally (when we run out of memory?):
 - **Objects are not moved.**
 
 ### 它是如何工作的？
-偶尔（当我们的内存用完时？）：
-- 标记根能直接引用到的所有对象
+
+偶尔（当我们用完内存时？）：
+- 标记指针变量(`roots set`)能直接引用到的所有对象
 - 重复地：
-  - 从新的已经标记的对象中标记可达对象。
+  - 标记可从新标记的对象直接可达的对象。
 - 最后识别未标记的对象（清除）
   - 例如: 把他们放在`free list`上。
   - 重用以满足分配内存请求。
@@ -408,7 +439,10 @@ Occasionally (when we run out of memory?):
 
 ### 标记/清除 插画
 
-从`Stack`(根)出发, 依次标记(绿色对勾)标记可达的`heap`的内存空间. 然后清除未被标记的.
+从`Stack`(根)出发, 依次标记(绿色对勾)标记可达的 堆 的内存空间. 然后"清除"未被标记的.
+
+从图示来理解:
+这里这个清除其实蛮简单的, 只是单纯放到一个 `free list` 里面, 等要有需要的时候被重新分配.
 
 ---
 
@@ -441,17 +475,17 @@ Occasionally (when we run out of memory?):
   - 每次分配可回收一次。
   - 我们每次都会查看所有可达的对象 -> 昂贵
 - 解决方案：
-  - 始终确保`heap`比需要的大1.5倍。
+  - 始终确保 堆 比需要的大1.5倍。
   - 每个周期，分配 `n/3` 字节时，跟踪 `2n/3` 字节。
   - 在分配到的内存空间里跟踪前2个字节。
-
+    ![](https://raw.githubusercontent.com/danyow/picgo/main/live-data.png)
 2. 
 - 性能通常由内存访问决定。
-- 每次循环每个要回收的对象都要被触摸两次。
+- 每个回收的对象每个周期被触摸两次。
   - 一次在清除阶段。
   - 一次在分配过程中。
 - 解决方案：
-  - 分配前清除一点。
+  - 分配前一次清除一点。
   - 尝试将对象保留在缓存中。
   - "清除阶段"用词不当。
   - 对`GC`数据结构施加约束。
@@ -480,19 +514,17 @@ Occasionally (when we run out of memory?):
     - 标记: `O(live_data_size)`
     - 扫描: `O(heap_size)`
     - 总计: `O(heap_size)`
-  - M&S 更昂贵（`heap_size` >> `live_data_size)`
+  - `M&S` 复杂度更高当（`heap_size` >> `live_data_size)`
 - 另一种观点：
   - 清除不算数分配的一部分。
   - `M&S`可以避免接触无指针数据（字符串、位图）
   - `M&S`: `O(pointer_containing_data)`
-  - `Copying` 成本更高
+  - `Copying` 复杂度更高当
     - （如果 `pointer_containing_data` << `live_data_size` ）
 
 ---
 
 ## Implementation details overview
-
-![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200001.png)
 
 - General design issues:
   - The underlying allocator.
@@ -509,15 +541,17 @@ Occasionally (when we run out of memory?):
   - Finalization.
   - Debug support.
 
+![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200001.png)
+
 ### 实现细节描述
 
 - 一般设计问题：
   - 底层分配器。
   - **指针有效性检查并标记位。**
   - 部分指针位置信息。
-  - **寻找潜在的`roots`。**
+  - **寻找潜在的根`roots set`。**
   - 标记算法和堆栈溢出。
-  - 线程支撑。
+  - 线程支持。
 - 增强功能：
   - **"错误指针"黑名单**
   - 增量/并发/分代`GC`。
@@ -544,20 +578,35 @@ Occasionally (when we run out of memory?):
   - **Can avoid touching pointer-free pages.**
 
 
-## 分配器设计
+### 分配器设计
 
 - 按大小、指针内容分隔对象...
 - 每个`"page"`包含单个大小的对象。
 - 每个小对象大小都有单独地`free list`。
-- 用于page、大对象的大对象分配器。
+- 用于`page`、大对象的大对象分配器。
 - **特点**：
   - **无每对象空间开销（标记位除外）**
   - **小对象碎片开销系数：**
-    - **<#size class =`O(log(largest_sz/smallest_sz))`**
+    - **`O(log(largest_sz/smallest_sz))`**
     - **渐近最优（`Robson 71`）**
   - **快速分配**。
   - **部分扫描是可能的。**
   - **可以避免触摸无指针`page`。**
+
+
+[高川老师讲贝母的内存设计](https://www.bilibili.com/video/BV1r44y1z7X3?p=2&t=35m05s)
+
+![](https://raw.githubusercontent.com/danyow/picgo/main/20220410094632.png)
+
+贝母在内存管理的时候，是一个两级的管理：第一级，Kind类型，贝母在分配的时候会分配出很多种不同的类型。
+
+常见的有 `PTRFREE`（无指针类型），`Normal`（比较一般的类型），还有 `Uncollectable`（不可回收类型），一般是贝母自己要用的一块内存会分配到 `Uncollectable`。
+
+每一个类型是一个列表，在列表下面分别会挂一个二级列表，去标明当前这一块内存块下面的大小，在第二层的下面挂着一个链表，这个链表里边每一块就是对应上面大小的一小块内存。
+
+图中两个 `Block0` 是物理连接的，这两块物理地址是连续的，假如现在要回收两个 `Block0` ，当这两块内存都被释放掉的时候，`Unity`会尝试去找两块，比如说释放第一块，`Unity`发现后边的物理内存也是被释放掉的。
+
+便把两块合并起来，让指针直接挂到更大的地方去，从而尽量减少整体内存碎片的发生。这个策略能理解为尽量会把空闲出来的内存合并成一个较大的内存块，同时在以移动指针的方式。
 
 ---
 
@@ -597,11 +646,11 @@ Occasionally (when we run out of memory?):
     - _对象：必须对齐。_
     - _窃取一个字节可能需要一个单词。_
   - _在每个块的开头：_
-    - _所有标记位都映射到几个缓存线。_
-    - _必须使用无指针对象触摸页面。_
+    - _所有标记位都映射到几个高速缓存行。_
+    - _必须使用无指针对象触摸`page`。_
   - 在单独的数据结构中。
     - 每次访问都有更多说明。
-    - 无指针页面不会被触碰，缓存问题更少。
+    - 无指针`page`不会被触碰，缓存问题更少。
 
 ---
 
@@ -609,9 +658,10 @@ Occasionally (when we run out of memory?):
 
 ![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200112.png)
 
-`Page descriptor`: 页面描述符
-`Mark bits`: 标记位
-`Offset Map(later)`: 偏移表（延迟） 
+- `Page descriptor`: 页面描述符
+- `Mark bits`: 标记位
+- `Offset Map(later)`: 偏移表（延迟） 
+
 ---
 
 ## Pointer validity check
@@ -628,11 +678,12 @@ Occasionally (when we run out of memory?):
   - Small constant number of memory references.
   
 ### 指针有效性检查
-- 获取页面描述符。有效的堆页？
+
+- 获取页面描述符。有效的堆`page`？
   - 大约三次内存引用。
     - 64位地址只是一个简单顶层哈希方案。
-  - 两个有一个小缓存。
-- 如果不是对象的第一页，请调整。
+  - 两个带有小缓存。
+- 如果不是对象的第一`page`，请调整。
 - 有效对象中的有效偏移量？
   - 页中偏移量的余数计算使对象开始。
   - 剩余部分可在"有效偏移"表中查找。
@@ -655,14 +706,14 @@ Occasionally (when we run out of memory?):
 
 ### 部分指针位置（类型）信息。
 
--通常很容易确定堆对象（例如`GCJ（Java）`、`Mono（.Net）`）中指针的位置。
--收集器提供不同的分配调用来进行通信。
--物体是按大小和种类分开的。
--每种类型都有关联的对象描述符：
-  -前n个字段是指针。
-  -30位或62位位图标识指针位置。
-  -客户指定的标记程序。
-  -间接：描述符位于对象或`vtable`中。
+- 确定堆对象中指针的位置通常很容易（例如`GCJ（Java）`、`Mono（.Net）`）。
+- 回收器提供不同的分配调用来进行通信。
+- 对象是按大小和种类分开的。
+- 每种类型都有关联的对象描述符：
+  - 前 `n` 个字段是指针。
+  - 30位或62位位图标识指针位置。
+  - 客户指定的标记程序。
+  - 间接：描述符位于对象或`vtable`中。
 
 ---
 
@@ -682,7 +733,8 @@ Occasionally (when we run out of memory?):
     - **But you only have to do it once per platform.**
 
 ### 定位根
-- 默认情况下，`roots`包括：
+
+- 默认情况下，根`roots set`包括：
   - 寄存器
   - 运行时栈
   - 静态分配的数据区域
@@ -690,10 +742,10 @@ Occasionally (when we run out of memory?):
 - **我们如何得到他们的位置？**
   - **寄存器：滥用`setjmp` `__builtin_unwind_init`...**
   - **运行时栈：你并不想知道。**
-    - **需要常量调用保存注册表。快照**
+    - **需要一个固定的调用者来保存`reg.`快照**
   - **静态数据段：你也不想知道。**
   - **非常依赖平台**
-    - **但每个平台只需执行一次。**
+    - **但每个平台您只需执行一次。**
 
 ---
 
@@ -713,13 +765,14 @@ Occasionally (when we run out of memory?):
 
 ### 基本标记算法
 
-- 保持对的显式标记栈：
+- 维护显式标记栈对(`key`, `value`)：
+  ![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200205.png)
 - 最初：
-  - 对于每个根，推入对象。
-  - 对于每个根范围，推入范围。
+  - 对于每个单独的根(`roots set`)，推入对象。
+  - 对于每个根范围，推入整个根范围。
 - 然后反复说：
   - 从栈中弹出（`addr`，`descr`）对。
-  - 对于成对描述的内存中的每个可能指针：
+  - 对于由 `pair` 描述的内存中每个可能的指针：
     - 检查指针的有效性。如果有效且未标记：
     - 为目标设置标记位。（已经有页面描述符。）
     - 推入对象地址和描述符（从页面描述符）
@@ -741,10 +794,10 @@ Occasionally (when we run out of memory?):
 
 ### 标记改进
 
-- 尽可能多地尝试。
+- 尽量调。
   - 这是`GC`花费时间的地方。
 - 重要的是内存访问。
-  - 在堆栈上推送描述符时预取对象。
+  - 当我们将其描述符压入堆时预取对象。
   - 可以节省 1/3 个标记时间。
 - 范围首先检查可能的指针的合理性。
   - 消除了几乎所有的非指针。
@@ -780,6 +833,38 @@ Occasionally (when we run out of memory?):
    - 检查头部的标记位。
    - 如果未设置，则设置它，从块头获取描述符，将条目推入标记栈上。
 
+这里很大一个篇幅在描写栈. 但描述的是标记器
+
+以下是分配器的相关描述, 合并参考:
+
+[高川老师讲栈分配器](https://www.bilibili.com/video/BV1r44y1z7X3?p=2&t=13m25s)
+
+栈分配器有三个特点:
+
+- 第一个是特别地快，
+- 第二个是特别地小，
+- 第三个是临时，
+
+分配器大部分情况下是用来分配临时变量。
+
+当要去分配一块内存的时候，实际上 `Unity` 帮忙分配了两块内存。
+
+- 第一块是`header`，记录了当前这一次分配的一些信息。比如：某一块当前是不是要被删掉，是不是还在用；真正给用户的区域大小；比如说当前块的前面一块是谁。
+- `Header`下面才是第二块，即用户的分配使用区域。这一整块内存是在一开始就已经预先分配好的，在进行栈分配的时候，只是在不停的调整栈顶指针，依次向下分配，每一次只在栈的顶端，也就是这块内存的尾部再去分配。
+
+当整个预先分配栈内存被消耗干净了之后，还会额外的拓展出一块新的，这个拓展不是无限的而是有一个大小的限制。
+
+在回收内存时，首先把这块内存的 `deleted` 的在 `Header` 里边标记成1，表示这一块内存已经无用了，再栈顶指针回弹就可以了，这样是非常快的。分配和回收一样都是挪栈指针，所以分配和回收都非常地快。
+
+如果回收的位置是中间而不是内存块的尾巴，只需要把头的这个 `deleted` 的标记成1，也就是标记上已经删除了，直到尾巴被回收，在栈顶指针回弹的时候，会去再检查当前这一块是不是也被删除了，
+
+如果是，栈顶指针再次向上移动，直到找到一个没有被删除的块，或者是挪到了 `Header`，这样就导致如果尾巴处的内存一直没有释放，中间已经释放的内存块无法再次使用，这就是栈分配器的一个限制，它无法快速立刻去重用已经释放的内存，它必须要等栈顶被释放的时候，才能向回去寻找这些连续内存。
+
+> 当因为你的数据量太大，把拥挤的临时堆栈撑爆了，有两种方法解决：
+
+1. 去减少你们每一帧的数据量。
+2. 通过Unity源码，把堆栈加大一点。
+
 ---
 
 ## Marker performance: Why GC needs a fast multiplier.
@@ -800,9 +885,10 @@ Occasionally (when we run out of memory?):
 
 
 ### 标记器性能：为什么 `GC` 需要快速乘法器
+
 - **在玩具基准测试中，小对象，`1x1.4GHz` 安腾**
   - **`500MB/s`（峰值内存。带宽 `6.4GB/s`。）**
-  - **大约 90 个周期/对象。（`L3 cache`未命中 ~200cycles）**
+  - **大约 90 个周期/对象。（`L3` 缓存未命中 `~200cycles`）**
 - **在 `2GHz Xeon` 上大约 `260MB/s`，180 个周期/对象。**
 - 缓存未命中很重要。
 - 分工是个问题。
@@ -832,6 +918,7 @@ Occasionally (when we run out of memory?):
   - Ensures forward progress.
 
 ### 如果标记堆栈溢出
+
 - **可能当您接近内存限制时。**
 - **程序员希望能够从内存不足中恢复**
   - **……尽管它几乎从来都不是 100% 可靠的，不管 `GC` 与否。**
@@ -845,8 +932,7 @@ Occasionally (when we run out of memory?):
   - 如果可能，增加标记堆栈。
 - 切勿在未设置标记位的情况下推送大量条目。
   - 确保前进。
-
-
+  
 ---
 
 ## The "sweep phase"
@@ -872,11 +958,8 @@ Occasionally (when we run out of memory?):
 
 ## Thread support
 
-- Uncontrolled concurrent mutation of data structures can cause objects to be
-  overlooked by marker:
-
-![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200333.png)
-
+- Uncontrolled concurrent mutation of data structures can cause objects to be overlooked by marker:
+  ![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200333.png)
 - Results in reclaimed reachable objects.
 - We stop threads during critical GC phases.
   - Unlike most GCs, threads can be
@@ -892,6 +975,7 @@ Occasionally (when we run out of memory?):
 ### 线程支持
 
 - 数据结构的不受控制的并发突变会导致对象被标记忽略：
+  ![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200333.png)
 - 导致回收的可达对象
 - 我们在关键的 `GC` 阶段停止线程。
   - 与大多数 `GC` 不同，线程可以在任何地方停止。
@@ -919,8 +1003,10 @@ Occasionally (when we run out of memory?):
 ### 
 
 - 保守的指针查找会导致内存保留：
+  ![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200419.png)
 - 在许多情况下，这是可以避免的。
   - 如果我们在不久的将来看到一个地址堆增长：
+    ![](https://raw.githubusercontent.com/danyow/picgo/main/20220409200457.png)
   - 不要在位置 `0x1a34c` 分配。
   - 我们跟踪带有虚假指针的页面。
     - 标记更新列表。
@@ -988,7 +1074,7 @@ Occasionally (when we run out of memory?):
   - **Leave mark bits set after "full GC", but track dirty pages.** 
   - **"Fixup GC" is minor GC.**
 
-##   分代、增量、大部分并发
+###   分代、增量、大部分并发
 - 观察：
   - 运行标记同时建立不变量：
     - 来自标记对象或根的指针
@@ -1033,7 +1119,7 @@ Occasionally (when we run out of memory?):
 - 随着客户端并行度的增加，最终我们将所有时间都花在了 `GC` 的顺序部分。
 - 扫描一次完成一页并且可以并行化。标记呢？
 - 标记也是相当可并行的。
-- 首先，也是最彻底的，由 `Endo`、`Taura` 和 `Yonezawa`（`SC97`、64 处理器机器）完成。
+- 首先，也是最彻底的，由 `Endo`、`Taura` 和 `Yonezawa`（`SC97、64 processor machine`）完成。
 - 我们的发行版包含更简单的版本...
 
 ---
@@ -1428,6 +1514,7 @@ Occasionally (when we run out of memory?):
   (Vesta, Xerox printers).
 - Stationary objects allow one word object headers in gcj.
 
+### 其他经验
 
 - 通常适用于小型（< `100MB` 实时数据）客户端或 64 位机器。
   - 有时需要频繁出现的堆对象的位指针位置信息。通常 `GC_MALLOC_ATOMIC` 对于 C 代码就足够了。
@@ -1452,6 +1539,8 @@ Occasionally (when we run out of memory?):
     - Up to 62% space overhead.
 - More theoretical study:
   - Boehm, "Bounding Space Usage of Conservative Garbage Collectors", POPL 2002.
+
+### 保守`GC`的空间开销
 
 - 巧妙的实证研究：
   - `Hirzel`, `Diwan`, `Henkel`，“关于垃圾收集的类型和活性准确性的有用性”，`TOPLAS 24, 6, November 2002`。
@@ -1479,7 +1568,7 @@ Occasionally (when we run out of memory?):
   - See work by Blackburn, Cheng, and McKinley.
   - But I don't think we fully understand this yet...
 
-### 
+### 结论
 
 - 收集器仍然是一个有用的工具
   - 避免 `C/C++` 中的手动内存管理问题。
