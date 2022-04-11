@@ -1,6 +1,6 @@
 ---
 id: lua-gc-principle
-title: Lua GC 的工作原理
+title: lua GC 的工作原理
 slug: /reprint/lua-gc-principle
 ---
 
