@@ -360,15 +360,18 @@ const config = {
         },
         gtag: !isDeployPreview
           ? {
-            trackingID: 'UA-141789564-1',
-          }
+              trackingID: 'UA-141789564-1',
+            }
           : undefined,
+        sitemap: {
+          ignorePatterns: ['/tests/**'],
+        },
       }),
     ],
   ],
 
   themeConfig:
-  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       liveCodeBlock: {
         playgroundPosition: 'bottom',
