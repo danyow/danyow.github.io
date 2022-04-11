@@ -11,36 +11,31 @@ slug: /audition/csharp
 
 ### 值类型 `ValueType`
 
-1. 数值类型
-
-  1. 整型
-    1. sbyte(System.SByte)
-    2. short(System.Int16)
-    3. int(System.Int32)
-    4. long(System.Int64)
-    5. byte(System.Byte)
-    6. ushort(System.UInt16)
-    7. uint(System.UInt32)
-    8. ulong(System.UInt64)
-    9. char(System.Char)
-  2. 浮点型
-    1. float(System.Single)，
-    2. double(System.Double)。
-  3. 高精度型
-    1. decimal(System.Decimal)
-2. 结构体
-
-  1. struct(直接派生于System.ValueType)
-3. bool型
-
-  1. bool(System.Boolean的别名)
-4. 用户定义的结构体
-5. 枚举
-
-  1. enum(派生于System.Enum)
-6. 可空类型
-
-  1. 派生于`System.Nullable<T>`泛型结构体，T实际上是`System.Nullable<T>`的别名
+- 数值类型
+  - 整型
+    - `sbyte(System.SByte)`
+    - `short(System.Int16)`
+    - `int(System.Int32)`
+    - `long(System.Int64)`
+    - `byte(System.Byte)`
+    - `ushort(System.UInt16)`
+    - `uint(System.UInt32)`
+    - `ulong(System.UInt64)`
+    - `char(System.Char)`
+  - 浮点型
+    - `float(System.Single)`
+    - `double(System.Double)`
+  - 高精度型
+    - `decimal(System.Decimal)`
+- 结构体
+  - `struct`(直接派生于`System.ValueType`)
+- `bool`型
+  - `bool`(`System.Boolean`的别名)
+- 用户定义的结构体
+- 枚举
+  - `enum`(派生于`System.Enum`)
+- 可空类型
+  - 派生于`System.Nullable<T>`泛型结构体，`T`实际上是`System.Nullable<T>`的别名
 
 ### 引用类型(ReferenceType):
 
@@ -246,11 +241,17 @@ byte e = '啊';  // 中文 错误
 byte g = 256;   // 0~255 错误
 ```
 
-$$ 1 byte = 8 bit $$
+$$ 
+1 byte = 8 bit 
+$$
 
-$$ 1汉字 = 2byte = 16bit $$
+$$
+1ChineseWord = 2byte = 16bit 
+$$
 
-$$ 1英文 = 1byte = 8bit $$
+$$
+1Char = 1byte = 8bit 
+$$
 
 其中byte取值范围在c#中是0~255, java中则是-128~127
 

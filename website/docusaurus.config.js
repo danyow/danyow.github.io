@@ -199,10 +199,10 @@ const config = {
           return [];
         },
         redirects: [
-          {
-            from: ['/'],
-            to: '/docs',
-          },
+          // {
+          //   from: ['/'],
+          //   to: '/docs',
+          // },
           // {
           //   from: ['/docs/Lua@5.3'],
           //   to: '/docs/Lua@5.3/lua/hello'
@@ -346,6 +346,8 @@ const config = {
             type: 'all',
             copyright: `Copyright © ${new Date().getFullYear()} Danyow, Inc.`,
           },
+          remarkPlugins: [math, [npm2yarn, {sync: true}]],
+          rehypePlugins: [],
           blogSidebarCount: 'ALL',
           blogSidebarTitle: 'All our posts',
         },
@@ -360,18 +362,18 @@ const config = {
         },
         gtag: !isDeployPreview
           ? {
-              trackingID: 'UA-141789564-1',
-            }
+            trackingID: 'UA-141789564-1',
+          }
           : undefined,
-        sitemap: {
-          ignorePatterns: ['/tests/**'],
-        },
+        // sitemap: {
+        //   ignorePatterns: ['/tests/**'],
+        // },
       }),
     ],
   ],
 
   themeConfig:
-    /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
+  /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       liveCodeBlock: {
         playgroundPosition: 'bottom',
@@ -392,7 +394,7 @@ const config = {
         // and the YAML front matter is highlighted correctly.
         // TODO after we have forked prism-react-renderer, we should tweak the
         // import order and fix it there
-        additionalLanguages: ['java', 'markdown', 'latex'],
+        additionalLanguages: ['java', 'markdown', 'csharp', 'c', 'latex', 'lua'],
       },
       // image: 'img/docusaurus-soc.png',
       // metadata: [{name: 'twitter:card', content: 'summary'}],
@@ -589,13 +591,17 @@ async function createConfig() {
   const katex = (await import('rehype-katex')).default;
   config.plugins?.push(FeatureRequestsPlugin);
   // @ts-expect-error: we know it exists, right
-  config.presets[0][1].docs.remarkPlugins.push(configTabs);
-  // @ts-expect-error: we know it exists, right
   config.themeConfig.prism.theme = lightTheme;
   // @ts-expect-error: we know it exists, right
   config.themeConfig.prism.darkTheme = darkTheme;
   // @ts-expect-error: we know it exists, right
+  config.presets[0][1].docs.remarkPlugins.push(configTabs);
+  // @ts-expect-error: we know it exists, right
   config.presets[0][1].docs.rehypePlugins.push(katex);
+  // @ts-expect-error: we know it exists, right
+  config.presets[0][1].blog.remarkPlugins.push(configTabs);
+  // @ts-expect-error: we know it exists, right
+  config.presets[0][1].blog.rehypePlugins.push(katex);
   return config;
 }
 
