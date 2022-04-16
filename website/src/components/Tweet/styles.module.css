@@ -9,10 +9,7 @@
   font-size: 15px;
 }
 
-.tweetMeta {
+.tweetMeta,
+.tweetMeta:hover {
   color: var(--ifm-color-emphasis-700);
-}
-
-.tweetMeta strong {
-  color: var(--ifm-font-color-base);
 }

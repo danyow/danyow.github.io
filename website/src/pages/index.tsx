@@ -54,7 +54,7 @@ function HeroBanner() {
             <Translate>Get Started</Translate>
           </Link>
           <Link className="button button--info" to="https://docusaurus.new">
-            <Translate>Try a Demo</Translate>
+            <Translate>Playground</Translate>
           </Link>
           <span className={styles.indexCtasGitHubButtonWrapper}>
             <iframe
@@ -194,8 +194,8 @@ function VideoContainer() {
 //       <img
 //         className={styles.featureImage}
 //         alt={feature.title}
-//         width={Math.floor(feature.image.width)}
-//         height={Math.floor(feature.image.height)}
+//         width={feature.image.width}
+//         height={feature.image.height}
 //         src={withBaseUrl(feature.image.src)}
 //	   loading="lazy"
 //       />
