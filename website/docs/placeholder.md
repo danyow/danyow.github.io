@@ -10,14 +10,36 @@ slug: /
 尝试预览, 为Lua@5.3做准备
 
 
-\begin{circuitikz}[scale=0.7, transform shape]
-\draw[step=1,gray,very thin] (0,0) grid (5,5);
-\end{circuitikz}
+<!-- truncate -->
 
-**Fundamental Theorem of Calculus**  
-Let $f:[a,b] \to \R$ be Riemann integrable. Let $F:[a,b]\to\R$ be $F(x)=
-\int_{a}^{x}f(t)dt$.
-Then $$F$$ is continuous, and at all $x$ such that $f$ is continuous at $x$,
-$F$ is differentiable at $x$ with $F'(x)=f(x)$.
+```jsx live
+function Clock(props) {
+  const [date, setDate] = useState(new Date());
+  useEffect(() => {
+    var timerID = setInterval(() => tick(), 1000);
 
-$1 \times 10^{-8}$
+    return function cleanup() {
+      clearInterval(timerID);
+    };
+  });
+
+  function tick() {
+    setDate(new Date());
+  }
+
+  var count = Random.getRandomInt(0, 100);
+  var numbers = [];
+  var listItems = numbers.map((number) =>
+    <li>{number}</li>
+  );
+  
+  
+  return (
+    <div>
+      <h1>Hello, world!</h1>
+      <h1>{listItems}</h1>
+      <h2>It is {date.toLocaleTimeString()}.</h2>
+    </div>
+  );
+}
+```
