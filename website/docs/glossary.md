@@ -35,3 +35,7 @@
 能将`Java`源文件编译成`Java`字节码文件或者直接将`Java`源文件编译为本地机器码, 它也能够将`Java`字节码文件编译为本地机器码
 
 ## `EOF` = `End Of File`(文件结束符)
+
+## `OSI` = `Open System Interconnection Reference Model`(开放式系统互联通信参考模型)
+
+## `TCP/IP` = ``(面向**连接**的可靠的协议)

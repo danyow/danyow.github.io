@@ -26,18 +26,10 @@ function Clock(props) {
   function tick() {
     setDate(new Date());
   }
-
-  var count = Random.getRandomInt(0, 100);
-  var numbers = [];
-  var listItems = numbers.map((number) =>
-    <li>{number}</li>
-  );
-  
   
   return (
     <div>
       <h1>Hello, world!</h1>
-      <h1>{listItems}</h1>
       <h2>It is {date.toLocaleTimeString()}.</h2>
     </div>
   );
