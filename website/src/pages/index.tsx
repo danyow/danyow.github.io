@@ -92,7 +92,6 @@ function MigrationAnnouncement() {
           }}>
           {`Coming from {docusaurusV1Link}? Check out our {migrationGuideLink}`}
         </Translate>
-        .
       </div>
     </div>
   );
@@ -168,7 +167,6 @@ function VideoContainer() {
               height="315"
               src="https://www.youtube.com/embed/_An9EsKPhp0"
               title="Explain Like I'm 5: Docusaurus"
-              frameBorder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               loading="lazy"

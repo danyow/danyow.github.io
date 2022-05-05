@@ -8,6 +8,7 @@
 import React from 'react';
 import BlogLayout from '@theme/BlogLayout';
 import BlogListPaginator from '@theme/BlogListPaginator';
+import Translate from '@docusaurus/Translate';
 import type {Props} from '@theme/BlogListPage';
 import {
   PageMetadata,
