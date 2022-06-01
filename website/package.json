@@ -79,7 +79,7 @@
     ]
   },
   "devDependencies": {
-    "@docusaurus/eslint-plugin": "2.0.0-beta.19",
+    "@docusaurus/eslint-plugin": "2.0.0-beta.21",
     "@tsconfig/docusaurus": "^1.0.5",
     "@types/jest": "^27.4.1",
     "cross-env": "^7.0.3",
