@@ -95,7 +95,7 @@
     "jest-serializer-react-helmet-async": "^1.0.21",
     "lerna": "^4.0.0",
     "lerna-changelog": "^2.2.0",
-    "lint-staged": "^12.4.1",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.6.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
