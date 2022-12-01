@@ -46,7 +46,7 @@
     "@docusaurus/theme-classic": "2.0.0-beta.19",
     "@docusaurus/theme-common": "2.0.0-beta.19",
     "@docusaurus/theme-live-codeblock": "2.0.0-beta.19",
-    "@docusaurus/utils": "2.0.0-beta.19",
+    "@docusaurus/utils": "2.2.0",
     "@docusaurus/utils-common": "2.0.0-beta.19",
     "@popperjs/core": "^2.11.5",
     "@swc/core": "^1.2.174",
