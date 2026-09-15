@@ -1,43 +1,128 @@
-name: 持续部署到Github
+name: Publish root news site
 
 on:
   push:
-    branches:
-      - master
+    branches: [master]
+    paths: ['deployment/**', '.github/workflows/deploy.yml']
+  pull_request:
+    branches: [master]
+    paths: ['deployment/**', '.github/workflows/deploy.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: root-news-site
+  cancel-in-progress: false
 
 jobs:
-  deploy:
-    name: 部署任务
+  build:
     runs-on: ubuntu-latest
-
+    timeout-minutes: 15
+    outputs:
+      source_sha: ${{ steps.source.outputs.sha }}
     steps:
-      - name: 1. 检出代码
-        uses: actions/checkout@v3
-      - name: 2. 设置 node 版本
-        uses: actions/setup-node@v3
+      - uses: actions/checkout@v7
         with:
-          node-version: '16'
-          cache: yarn
-      - name: 3. 配置环境&构建网站
-        env:
-          CROWDIN_PERSONAL_TOKEN: ${{ secrets.CROWDIN_PERSONAL_TOKEN }}
-          # 本地化 crowdin-udb
+          path: deployment-repo
+          persist-credentials: false
+      - name: Validate publication request
+        working-directory: deployment-repo
         run: |
-          yarn install
-          yarn build
+          node -e 'const r=require("./deployment/source.json"); if(r.schema!==1||r.repository!=="danyow/danyow"||r.branch!=="main"||! /^[a-f0-9]{40}$/.test(r.source_sha)) throw Error("INVALID_PUBLICATION_REQUEST")'
+      - uses: actions/checkout@v7
+        with:
+          repository: danyow/danyow
+          ref: main
+          path: source
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Resolve latest approved source without rolling back newer reports
+        id: source
+        working-directory: source
+        run: |
+          requested=$(node -p 'require("../deployment-repo/deployment/source.json").source_sha')
+          git merge-base --is-ancestor "$requested" HEAD
+          echo "sha=$(git rev-parse HEAD)" >> "$GITHUB_OUTPUT"
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: source/package-lock.json
+      - name: Install locked dependencies
+        working-directory: source
+        run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Test archive and preserved content
+        working-directory: source
+        run: npm test
+      - name: Type check
+        working-directory: source
+        env:
+          SITE_BASE_URL: /
+        run: npm run check
+      - name: Build the actual root site and check internal links
+        working-directory: source
+        env:
+          SITE_BASE_URL: /
+          SITE_URL: https://danyow.cn
+        run: npm run build
+      - name: Require root canonical URLs and write publication receipt
+        working-directory: source
+        env:
+          SOURCE_SHA: ${{ steps.source.outputs.sha }}
+        run: |
+          node ../deployment-repo/deployment/check-root.mjs
+          printf 'danyow.cn\n' > dist/CNAME
+          touch dist/.nojekyll
+          mkdir -p dist/.well-known
+          node -e 'require("fs").writeFileSync("dist/.well-known/danyow-deployment.json",JSON.stringify({schema:1,source_repository:"danyow/danyow",source_commit:process.env.SOURCE_SHA,request_commit:process.env.GITHUB_SHA,base:"/",built_at:new Date().toISOString()})+"\n")'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: root-website
+          path: source/dist
+          include-hidden-files: true
+          retention-days: 3
 
-      # 目前较为流行部署到 GitHubPages 的 Action：
-      # 文档: https://github.com/peaceiris/actions-gh-pages#%EF%B8%8F-docusaurus
-      - name: 部署到GitHub
-        uses: peaceiris/actions-gh-pages@v3
+  deploy:
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          repository: danyow/danyow
+          ref: ${{ needs.build.outputs.source_sha }}
+          path: source
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - uses: actions/download-artifact@v8
+        with:
+          name: root-website
+          path: source/dist
+      - name: Publish to the repository already bound to danyow.cn
+        uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          # 构建输出以发布到 `gh-pages` 分支：
-          publish_dir: website/build
-          # 将提交作者身份分配给官方 GH-Actions 机器人以部署到 `gh-pages` 分支：
-          # https://github.com/actions/checkout/issues/13#issuecomment-724415212
-          # 如果您未指定这两个字段，则默认使用 GH 操作机器人。
-          # 您可以使用自己的用户凭据替换它们。
+          publish_dir: source/dist
+          publish_branch: gh-pages
+          cname: danyow.cn
           user_name: github-actions[bot]
           user_email: 41898282+github-actions[bot]@users.noreply.github.com
-          cname: danyow.cn
+      - name: Verify root pages and every recent report version
+        working-directory: source
+        env:
+          SITE_BASE_URL: /
+          SITE_URL: https://danyow.cn
+        run: node scripts/verify-deployment.mjs
+      - name: Verify public source receipt
+        env:
+          SOURCE_SHA: ${{ needs.build.outputs.source_sha }}
+        run: |
+          node --input-type=module -e 'const r=await fetch("https://danyow.cn/.well-known/danyow-deployment.json?verify="+process.env.SOURCE_SHA,{signal:AbortSignal.timeout(15000)}); if(!r.ok)throw Error("ROOT_RECEIPT_HTTP_"+r.status);const p=await r.json();if(p.source_commit!==process.env.SOURCE_SHA||p.base!=="/")throw Error("ROOT_RECEIPT_MISMATCH");console.log(JSON.stringify(p));'
