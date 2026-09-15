@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[7763],{490:function(e){e.exports=JSON.parse('{"allTagsPath":"/en/blog/tags","name":"whiteglass","count":1,"permalink":"/en/blog/tags/whiteglass"}')}}]);
