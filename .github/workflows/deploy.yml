@@ -88,7 +88,7 @@ jobs:
     if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
     needs: build
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 12
     permissions:
       contents: write
     steps:
@@ -125,4 +125,26 @@ jobs:
         env:
           SOURCE_SHA: ${{ needs.build.outputs.source_sha }}
         run: |
-          node --input-type=module -e 'const r=await fetch("https://danyow.cn/.well-known/danyow-deployment.json?verify="+process.env.SOURCE_SHA,{signal:AbortSignal.timeout(15000)}); if(!r.ok)throw Error("ROOT_RECEIPT_HTTP_"+r.status);const p=await r.json();if(p.source_commit!==process.env.SOURCE_SHA||p.base!=="/")throw Error("ROOT_RECEIPT_MISMATCH");console.log(JSON.stringify(p));'
+          node --input-type=module <<'NODE'
+          import {setTimeout as sleep} from 'node:timers/promises';
+          const source=process.env.SOURCE_SHA, request=process.env.GITHUB_SHA;
+          if(!/^[a-f0-9]{40}$/.test(source||'')||!/^[a-f0-9]{40}$/.test(request||''))throw Error('INVALID_EXPECTED_RECEIPT');
+          const deadline=Date.now()+180000;
+          let verified=false;
+          for(let attempt=1;attempt<=13&&Date.now()<deadline;attempt++){
+            try{
+              const url=new URL('https://danyow.cn/.well-known/danyow-deployment.json');
+              url.searchParams.set('verify',source+'-'+request+'-'+attempt);
+              const response=await fetch(url,{headers:{'Cache-Control':'no-cache'},signal:AbortSignal.timeout(10000)});
+              if(!response.ok)throw Error('ROOT_RECEIPT_HTTP_'+response.status);
+              const receipt=await response.json();
+              if(receipt.schema!==1||receipt.source_repository!=='danyow/danyow'||receipt.source_commit!==source||receipt.request_commit!==request||receipt.base!=='/')throw Error('ROOT_RECEIPT_VERSION_PENDING');
+              console.log(JSON.stringify({rootReceipt:'verified',source_commit:source,request_commit:request,base:'/',attempts:attempt}));
+              verified=true;break;
+            }catch(error){
+              console.log('Waiting for root publication receipt: '+String(error.message).slice(0,120));
+              if(attempt<13&&Date.now()<deadline)await sleep(Math.min(15000,Math.max(0,deadline-Date.now())));
+            }
+          }
+          if(!verified)throw Error('ROOT_RECEIPT_NOT_VERIFIED_WITHIN_THREE_MINUTES');
+          NODE
