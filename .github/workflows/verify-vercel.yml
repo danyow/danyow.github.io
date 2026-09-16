@@ -1,0 +1,52 @@
+name: Verify public Vercel production
+
+on:
+  push:
+    branches: [master]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-vercel-production
+  cancel-in-progress: true
+
+jobs:
+  public-vercel:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Verify the public production origin without login or bypass tokens
+        env:
+          VERCEL_PUBLIC_ORIGIN: ${{ vars.VERCEL_PUBLIC_ORIGIN || 'https://danyow.vercel.app' }}
+          EXPECTED_REQUEST_COMMIT: ${{ github.sha }}
+        run: |
+          node --input-type=module <<'NODE'
+          import { verify } from './deployment/verify-vercel.mjs';
+          import { setTimeout as sleep } from 'node:timers/promises';
+          const origin = process.env.VERCEL_PUBLIC_ORIGIN;
+          const commit = process.env.EXPECTED_REQUEST_COMMIT;
+          let failure;
+          for (let attempt = 1; attempt <= 13; attempt++) {
+            try {
+              await verify(origin, commit);
+              console.log(JSON.stringify({ publicProductionOrigin: origin, requestCommit: commit, attempts: attempt }));
+              failure = undefined;
+              break;
+            } catch (error) {
+              failure = error;
+              console.log('Public Vercel verification pending: ' + String(error.message).slice(0, 180));
+              if (/VERCEL_HTTP_(401|403)|EXPECTED_PUBLIC_VERCEL/.test(error.message)) throw error;
+              if (attempt < 13) await sleep(15000);
+            }
+          }
+          if (failure) throw failure;
+          NODE
