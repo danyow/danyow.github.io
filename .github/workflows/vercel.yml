@@ -1,0 +1,42 @@
+name: Validate Vercel mirror build
+
+on:
+  push:
+    branches: [master]
+    paths: ['deployment/**', 'vercel.json', 'package.json', 'package-lock.json', '.nvmrc', '.github/workflows/vercel.yml', '.github/workflows/deploy.yml']
+  pull_request:
+    branches: [master]
+    paths: ['deployment/**', 'vercel.json', 'package.json', 'package-lock.json', '.nvmrc', '.github/workflows/vercel.yml', '.github/workflows/deploy.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vercel-contract-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  vercel-build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v7
+        with:
+          node-version: '22'
+          package-manager-cache: false
+      - name: Test publication, branch isolation and public verification contracts
+        run: npm test
+      - name: Exercise the exact Vercel build entrypoint against canonical source
+        env:
+          VERCEL_GIT_COMMIT_SHA: ${{ github.sha }}
+        run: npm run build
+      - uses: actions/upload-artifact@v7
+        with:
+          name: vercel-mirror
+          path: dist
+          include-hidden-files: true
+          retention-days: 3

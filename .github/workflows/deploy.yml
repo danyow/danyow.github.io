@@ -73,6 +73,7 @@ jobs:
           SOURCE_SHA: ${{ steps.source.outputs.sha }}
         run: |
           node ../deployment-repo/deployment/check-root.mjs
+          cp ../deployment-repo/deployment/gh-pages.vercel.json dist/vercel.json
           printf 'danyow.cn\n' > dist/CNAME
           touch dist/.nojekyll
           mkdir -p dist/.well-known

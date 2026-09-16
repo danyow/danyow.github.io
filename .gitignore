@@ -39,3 +39,7 @@ website/i18n/**/*
 #!website/i18n/fr/**/*
 
 .netlify
+
+# Generated mirror output and local Vercel linkage must not enter Git.
+/dist/
+/.vercel/
