@@ -1,0 +1,57 @@
+<!DOCTYPE html><html lang="zh-CN" class="dark font-sans"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="generator" content="Astro v6.1.5"><title>AI 引擎日报｜2026-09-21 | Danyow</title><meta name="description" content="GameWorldModel补上普通电脑运行与权重下载流程。 AI Native Game Engine新增可校验工作流模板。 两者更易复现，但都还不是成熟生产工具。"><meta name="theme-color" content="#202024"><meta name="color-scheme" content="dark light"><link rel="canonical" href="https://danyow.cn/ai-engine-watch/reports/2026-09-21/"><link rel="icon" type="image/svg+xml" href="/icons/favicon.svg"><link rel="alternate" type="application/rss+xml" title="Danyow AI 引擎日报" href="/rss.xml"><link rel="sitemap" href="/sitemap.xml"><meta property="og:type" content="article"><meta property="og:title" content="AI 引擎日报｜2026-09-21 | Danyow"><meta property="og:description" content="GameWorldModel补上普通电脑运行与权重下载流程。 AI Native Game Engine新增可校验工作流模板。 两者更易复现，但都还不是成熟生产工具。"><meta property="og:url" content="https://danyow.cn/ai-engine-watch/reports/2026-09-21/"><script>
+try {const mode=localStorage.getItem('danyow-theme')||'dark';document.documentElement.classList.toggle('dark',mode!=='light')}catch(_){document.documentElement.classList.add('dark')}
+</script><link rel="stylesheet" href="/_astro/__uno.BU4Uhfdw.css">
+<link rel="stylesheet" href="/_astro/Layout.DBOqAoW0.css"><style>[data-astro-transition-scope="astro-wif6pdce-1"] { view-transition-name: site-title-zh; }@layer astro { ::view-transition-old(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head><body> <a href="#content" class="skip-link">跳到正文</a> <div class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh" p="x-[min(7.25vw,3.731rem)] y-10" lg="mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),44rem)] min-h-full p-0"> <header class="lg:uno-desktop-column lg:top-20 cjk:tracking-wide mb-10.8"> <h2 class="font-bold font-title mb-2.8 mt-3 text-5.375 c-secondary lg:mb-1.8 lg:mt-0 lg:text-9 lg:c-primary">  <div class="box-content inline-block pr-1" data-disable-theme-toggle-transition data-astro-transition-scope="astro-wif6pdce-1"> <a id="site-title-link" href="/"> Danyow </a> </div> </h2> <div aria-hidden="true" class="text-3.5 c-secondary font-navbar lg:text-4 op-0 lg:op-100">技术在变，慢慢看。</div> </header><nav aria-label="主导航" class="mb-10.5 text-3.6 font-semibold leading-2.45em font-navbar lg:uno-desktop-column lg:text-4 lg:top-[calc(5rem+8rem)] cjk:tracking-wide"> <ul class="site-nav"> <li><a href="/" class="highlight-hover hover:c-primary after:bottom-0.7em">最新</a></li><li><a href="/ai-engine-watch/" aria-current="page" class="highlight-static c-primary font-bold after:bottom-0.7em">引擎日报</a></li><li><a href="/voice-agent-watch/" class="highlight-hover hover:c-primary after:bottom-0.7em">语音日报</a></li><li><a href="/note/" class="highlight-hover hover:c-primary after:bottom-0.7em">笔记</a></li><li><a href="/docs/" class="highlight-hover hover:c-primary after:bottom-0.7em">文档</a></li><li><a href="/gallery/" class="highlight-hover hover:c-primary after:bottom-0.7em">图集</a></li><li><a href="/archive/" class="highlight-hover hover:c-primary after:bottom-0.7em">归档</a></li><li><a href="/search/" class="highlight-hover hover:c-primary after:bottom-0.7em">搜索</a></li> <li><button id="theme-toggle" type="button" aria-label="切换为浅色" aria-pressed="false">浅色</button></li> </ul></nav><main id="content" class="mb-12"><article> <header class="article-header"><p class="edition">AI 引擎日报</p><h1>AI 引擎日报｜2026-09-21</h1><div class="entry-meta"><time datetime="2026-09-21">2026-09-21</time><span>北京时间</span></div></header>  <div class="heti" id="post-content"><p>今天一句话：今天的进展不在模型变大，而在实验开始补齐“普通人能跑”和“代理做完可验收”。</p>
+<h2 id="今天值得看">今天值得看</h2>
+<h3 id="开源项目-gameworldmodel从集群实验改到普通电脑可跑">[开源项目] GameWorldModel：从集群实验改到普通电脑可跑</h3>
+<p><strong>新在哪：</strong> 9 月 20 日新增本地配置、权重下载脚本和完整运行指南，Linux、macOS 可直接安装，Windows 需 WSL；生成游戏的打包体积也从约 15 MB 降到 4.7 MB。</p>
+<p><strong>有什么用：</strong> 昨天报道的“短视频转 three.js 小游戏”不再绑死作者的计算集群，开发者可以换自己的视频复跑，检查场景程序、物理绑定和自动试玩是否真的可复现。</p>
+<p><strong>现在能用吗：</strong> 代码已开源，但仓库的 Releases 仍为空。作者称完整感知权重约 9.6 GB，20 秒视频在 16 核 CPU 上约 4 分钟、峰值内存 8.5 GB；本报未独立复跑。</p>
+<p><a href="https://github.com/jwj1342/GameWorldModel/commit/fc3246ffc8f28af8dc517d0acd516508ab222700" rel="noopener noreferrer">代码提交 · 2026-09-20</a> · <a href="https://github.com/jwj1342/GameWorldModel/blob/fc3246ffc8f28af8dc517d0acd516508ab222700/RUNNING.md" rel="noopener noreferrer">运行指南 · 2026-09-20</a></p>
+<h3 id="agent-first-工具-ai-native-game-engine把代理步骤变成可判定工作流">[Agent-first 工具] AI Native Game Engine：把代理步骤变成可判定工作流</h3>
+<p><strong>新在哪：</strong> 9 月 20 日加入工作流骨架，可把既有技能拆成依赖、工具调用和验收项；今天又修正了流程替换后可能诱导重复执行副作用的错误提示，最新 GitHub CI 已通过。</p>
+<p><strong>有什么用：</strong> 它不负责渲染，而是让代理通过外部 MCP 操作 UE5、Blender、ComfyUI，再用结构化证据判断是否完成。传统引擎可把它当作代理编排与验收层。</p>
+<p><strong>现在能用吗：</strong> Python 代码和 MIT 许可已公开，但宿主软件及其 MCP 要自行安装，项目本身不会调用工具；目前没有正式 Release 或可玩 Demo，作者所称的 360 项测试也不等于真实游戏生产验证。</p>
+<p><a href="https://github.com/Fryt1/AI-Native-Game-Engine/commit/3419aa587da5433611b0c2d241b2f7ee37e98bf2" rel="noopener noreferrer">工作流模板提交 · 2026-09-20</a> · <a href="https://github.com/Fryt1/AI-Native-Game-Engine/commit/1020bff46a4d458ecd4e86c655df56069b50af35" rel="noopener noreferrer">副作用提示修正 · 2026-09-21</a> · <a href="https://github.com/Fryt1/AI-Native-Game-Engine" rel="noopener noreferrer">仓库</a></p>
+<h2 id="我的看法">我的看法</h2>
+<p>这两项更新都把重点从“能生成”移向“能复跑、能验收”。短期看，传统引擎更可能先多一层代理工具，而不是被替代。</p>
+<p>观察窗口：2026-09-14 至 2026-09-21；官网/仓库、国内/中文与论文已查，X 仅覆盖公开索引，未确认到额外原始发布。</p>
+</div>  <footer class="article-footer"><a href="/ai-engine-watch/">返回列表</a><a href="/ai-engine-watch/raw/2026/09/2026-09-21.md">Markdown 原稿</a><p class="version">修订 1 · <span>source-sha256:f37236ae067cd65c5d39d510bcbcef477effa4feb6ae389aecd9680de2a4283e</span></p></footer> </article></main><footer class="text-3 leading-1.25em font-navbar" lg="uno-desktop-column bottom-20 text-3.5"> <p>  <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" name="RSS" href="/rss.xml" target="_blank" rel="noopener noreferrer">RSS</a> / <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" name="GitHub" href="https://github.com/danyow/danyow" target="_blank" rel="noopener noreferrer">GitHub</a>  </p> <p>
+© 2019-2026 danyow </p> <p>
+Powered by <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a> </p> </footer> </div> <script type="module">const t=document.getElementById("theme-toggle"),n=()=>{const e=document.documentElement.classList.contains("dark");t?.setAttribute("aria-label",e?"切换为浅色":"切换为暗色"),t?.setAttribute("aria-pressed",String(!e)),t&&(t.textContent=e?"浅色":"暗色")};n();t?.addEventListener("click",()=>{document.documentElement.classList.toggle("dark");try{localStorage.setItem("danyow-theme",document.documentElement.classList.contains("dark")?"dark":"light")}catch{}n()});</script> </body></html>
