@@ -10,6 +10,37 @@ export function validateOrigin(value) {
   return url.origin;
 }
 
+// Report only allowlisted public metadata, never an arbitrary response body.
+function safeReceiptValue(value) {
+  if (value === undefined) return '[missing]';
+  if (value === null) return 'null';
+  if (typeof value === 'number' && Number.isFinite(value)) return String(value);
+  if (typeof value === 'string' &&
+    (/^[a-f0-9]{40}$/.test(value) ||
+      ['vercel', '/', '/danyow/', 'danyow/danyow'].includes(value))) return value;
+  return '[unexpected]';
+}
+
+export function validateReceipt(receipt, requestCommit) {
+  assert(typeof requestCommit === 'string' && /^[a-f0-9]{40}$/.test(requestCommit),
+    'EXPECTED_REQUEST_COMMIT_REQUIRED');
+  assert(receipt && typeof receipt === 'object' && !Array.isArray(receipt),
+    'VERCEL_RECEIPT_MISMATCH:object');
+  const expected = {
+    schema: 1, platform: 'vercel', base: '/',
+    source_repository: 'danyow/danyow', request_commit: requestCommit,
+  };
+  const mismatches = Object.entries(expected)
+    .filter(([field, value]) => receipt[field] !== value)
+    .map(([field, value]) => field + ' expected=' + safeReceiptValue(value) +
+      ' actual=' + safeReceiptValue(receipt[field]));
+  if (typeof receipt.source_commit !== 'string' || !/^[a-f0-9]{40}$/.test(receipt.source_commit)) {
+    mismatches.push('source_commit expected=full-git-sha actual=' + safeReceiptValue(receipt.source_commit));
+  }
+  assert(mismatches.length === 0, 'VERCEL_RECEIPT_MISMATCH:' + mismatches.join('; '));
+  return receipt;
+}
+
 export async function verify(originValue, requestCommit, fetcher = fetch) {
   const origin = validateOrigin(originValue);
   assert(/^[a-f0-9]{40}$/.test(requestCommit || ''), 'EXPECTED_REQUEST_COMMIT_REQUIRED');
@@ -21,9 +52,7 @@ export async function verify(originValue, requestCommit, fetcher = fetch) {
     return response;
   }
   const receipt = await (await get('/.well-known/danyow-deployment.json?verify=' + requestCommit)).json();
-  assert(receipt.schema === 1 && receipt.platform === 'vercel' && receipt.base === '/' &&
-    receipt.source_repository === 'danyow/danyow' && receipt.request_commit === requestCommit &&
-    /^[a-f0-9]{40}$/.test(receipt.source_commit || ''), 'VERCEL_RECEIPT_MISMATCH');
+  validateReceipt(receipt, requestCommit);
   const home = await (await get('/')).text();
   assert(home.includes('https://danyow.cn/') && !home.includes('http-equiv="refresh"'), 'NOT_A_MIRROR_HOMEPAGE');
   const asset = home.match(/(?:src|href)=["'](\/_astro\/[^"']+)["']/)?.[1];
