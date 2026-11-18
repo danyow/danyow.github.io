@@ -1,0 +1,56 @@
+<!DOCTYPE html><html lang="zh-CN" class="dark font-sans"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="generator" content="Astro v6.1.5"><title>AI 引擎日报｜2026-11-18 | Danyow</title><meta name="description" content="GameWM把规则与生成式交互拆成两层。 CARLA 1.0让代理能端到端操控仿真流程。 Genex补强代理构建稳定性与多人本地测试。"><meta name="theme-color" content="#202024"><meta name="color-scheme" content="dark light"><link rel="canonical" href="https://danyow.cn/ai-engine-watch/reports/2026-11-18/"><link rel="icon" type="image/svg+xml" href="/icons/favicon.svg"><link rel="alternate" type="application/rss+xml" title="Danyow AI 引擎日报" href="/rss.xml"><link rel="sitemap" href="/sitemap.xml"><meta property="og:type" content="article"><meta property="og:title" content="AI 引擎日报｜2026-11-18 | Danyow"><meta property="og:description" content="GameWM把规则与生成式交互拆成两层。 CARLA 1.0让代理能端到端操控仿真流程。 Genex补强代理构建稳定性与多人本地测试。"><meta property="og:url" content="https://danyow.cn/ai-engine-watch/reports/2026-11-18/"><script>
+try {const mode=localStorage.getItem('danyow-theme')||'dark';document.documentElement.classList.toggle('dark',mode!=='light')}catch(_){document.documentElement.classList.add('dark')}
+</script><link rel="stylesheet" href="/_astro/__uno.BU4Uhfdw.css">
+<link rel="stylesheet" href="/_astro/Layout.DBOqAoW0.css"><style>[data-astro-transition-scope="astro-wif6pdce-1"] { view-transition-name: site-title-zh; }@layer astro { ::view-transition-old(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head><body> <a href="#content" class="skip-link">跳到正文</a> <div class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh" p="x-[min(7.25vw,3.731rem)] y-10" lg="mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),44rem)] min-h-full p-0"> <header class="lg:uno-desktop-column lg:top-20 cjk:tracking-wide mb-10.8"> <h2 class="font-bold font-title mb-2.8 mt-3 text-5.375 c-secondary lg:mb-1.8 lg:mt-0 lg:text-9 lg:c-primary">  <div class="box-content inline-block pr-1" data-disable-theme-toggle-transition data-astro-transition-scope="astro-wif6pdce-1"> <a id="site-title-link" href="/"> Danyow </a> </div> </h2> <div aria-hidden="true" class="text-3.5 c-secondary font-navbar lg:text-4 op-0 lg:op-100">技术在变，慢慢看。</div> </header><nav aria-label="主导航" class="mb-10.5 text-3.6 font-semibold leading-2.45em font-navbar lg:uno-desktop-column lg:text-4 lg:top-[calc(5rem+8rem)] cjk:tracking-wide"> <ul class="site-nav"> <li><a href="/" class="highlight-hover hover:c-primary after:bottom-0.7em">最新</a></li><li><a href="/ai-engine-watch/" aria-current="page" class="highlight-static c-primary font-bold after:bottom-0.7em">引擎日报</a></li><li><a href="/voice-agent-watch/" class="highlight-hover hover:c-primary after:bottom-0.7em">语音日报</a></li><li><a href="/note/" class="highlight-hover hover:c-primary after:bottom-0.7em">笔记</a></li><li><a href="/docs/" class="highlight-hover hover:c-primary after:bottom-0.7em">文档</a></li><li><a href="/gallery/" class="highlight-hover hover:c-primary after:bottom-0.7em">图集</a></li><li><a href="/archive/" class="highlight-hover hover:c-primary after:bottom-0.7em">归档</a></li><li><a href="/search/" class="highlight-hover hover:c-primary after:bottom-0.7em">搜索</a></li> <li><button id="theme-toggle" type="button" aria-label="切换为浅色" aria-pressed="false">浅色</button></li> </ul></nav><main id="content" class="mb-12"><article> <header class="article-header"><p class="edition">AI 引擎日报</p><h1>AI 引擎日报｜2026-11-18</h1><div class="entry-meta"><time datetime="2026-11-18">2026-11-18</time><span>北京时间</span></div></header>  <div class="heti" id="post-content"><p>今天最值得看的是“分工”开始具体化：规则仍由确定性引擎掌握，模型与代理负责交互表现和工作流编排。</p>
+<ul>
+<li>
+<p><strong>GameWM</strong> 把游戏拆成两层：轻量引擎精确维护规则、状态、镜头和事件时刻，5B 至 33B 的视频模型再依据角色、场景与技能描述生成动作细节，让同一攻击可以呈现为不同武器或法术。它直指生成式运行时，而不只是素材工具；但论文自报的 33B 因果模型在 8 张 H200 上首段仍需 3.1 秒，随后约 13—18 帧/秒，低于 24 帧播放，14B、5B 还会提前触发或改变调度。本次论文可读，所列代码与项目页均返回 404，尚无可用权重或公开试玩，不能算成熟实时引擎。(<a href="https://arxiv.org/abs/2611.19247" rel="noopener noreferrer">论文，2026-11-14</a>)</p>
+</li>
+<li>
+<p><strong>CARLA 1.0</strong> 升级到 Unreal Engine 5.8，并把自动驾驶仿真包装成可由编码代理调用的完整技能链：启动服务器、生成交通、设置天气、挂载传感器、编写场景并读取评测结果。它还接入 NuRec 神经重建、Cosmos 世界模型与闭环驾驶示例，官方提供 Linux、Windows 和 Docker 包。现在能用于代理驱动的仿真与世界模型实验，但它本质仍是自动驾驶模拟器，不应直接称为 AI 原生游戏引擎；数字孪生工具也明确处于预览阶段。(<a href="https://carla.org/2026/11/17/release-1.0/" rel="noopener noreferrer">发布说明</a>、<a href="https://github.com/carla-simulator/carla/releases/tag/1.0" rel="noopener noreferrer">Release</a>，2026-11-17)</p>
+</li>
+<li>
+<p><strong>Genex 0.1.46</strong> 修复 Antigravity 在构建期间因后台检查而丢失登录状态的问题，并加入模型推理强度控制；多人 SDK 让仅链接客户端参与延迟探测、本地房间按稳定节奏运行，Unreal 辅助工具也能导入普通项目。对代理持续构建和联机原型测试很实用，多平台安装包已公开；不过版本仍早，Windows 安装程序未签名，更新说明也没有给出独立性能测试。(<a href="https://github.com/genex-games/genex-desktop/releases/tag/v0.1.46" rel="noopener noreferrer">Release，2026-11-17</a>)</p>
+</li>
+</ul>
+<p>我的判断：近期路线不是让模型吞掉整个引擎，而是先给规则层、生成层和代理工具之间建立可检查的契约。</p>
+<p>观察窗口为最近七天并补看旧线索；官网/仓库已查，国内中文已查，论文已查，X 仅完成公开搜索且未读到有效项目帖。</p>
+</div>  <footer class="article-footer"><a href="/ai-engine-watch/">返回列表</a><a href="/ai-engine-watch/raw/2026/11/2026-11-18.md">Markdown 原稿</a><p class="version">修订 1 · <span>source-sha256:4d20a9d086dea33e4aa7aefcf7cc1f559fb9260578d6e0c35c97f8564c319214</span></p></footer> </article></main><footer class="text-3 leading-1.25em font-navbar" lg="uno-desktop-column bottom-20 text-3.5"> <p>  <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" name="RSS" href="/rss.xml" target="_blank" rel="noopener noreferrer">RSS</a> / <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" name="GitHub" href="https://github.com/danyow/danyow" target="_blank" rel="noopener noreferrer">GitHub</a>  </p> <p>
+© 2019-2026 danyow </p> <p>
+Powered by <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a> </p> </footer> </div> <script type="module">const t=document.getElementById("theme-toggle"),n=()=>{const e=document.documentElement.classList.contains("dark");t?.setAttribute("aria-label",e?"切换为浅色":"切换为暗色"),t?.setAttribute("aria-pressed",String(!e)),t&&(t.textContent=e?"浅色":"暗色")};n();t?.addEventListener("click",()=>{document.documentElement.classList.toggle("dark");try{localStorage.setItem("danyow-theme",document.documentElement.classList.contains("dark")?"dark":"light")}catch{}n()});</script> </body></html>
