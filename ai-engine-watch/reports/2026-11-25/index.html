@@ -1,0 +1,51 @@
+<!DOCTYPE html><html lang="zh-CN" class="dark font-sans"> <head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><meta name="generator" content="Astro v6.1.5"><title>AI 引擎日报｜2026-11-25 | Danyow</title><meta name="description" content="Genex 0.2.8补上游戏分析、Godot桌面导出与Unreal兼容修复。 Origin主分支重做破坏、软体、车辆和布娃娃物理。"><meta name="theme-color" content="#202024"><meta name="color-scheme" content="dark light"><link rel="canonical" href="https://danyow.cn/ai-engine-watch/reports/2026-11-25/"><link rel="icon" type="image/svg+xml" href="/icons/favicon.svg"><link rel="alternate" type="application/rss+xml" title="Danyow AI 引擎日报" href="/rss.xml"><link rel="sitemap" href="/sitemap.xml"><meta property="og:type" content="article"><meta property="og:title" content="AI 引擎日报｜2026-11-25 | Danyow"><meta property="og:description" content="Genex 0.2.8补上游戏分析、Godot桌面导出与Unreal兼容修复。 Origin主分支重做破坏、软体、车辆和布娃娃物理。"><meta property="og:url" content="https://danyow.cn/ai-engine-watch/reports/2026-11-25/"><script>
+try {const mode=localStorage.getItem('danyow-theme')||'dark';document.documentElement.classList.toggle('dark',mode!=='light')}catch(_){document.documentElement.classList.add('dark')}
+</script><link rel="stylesheet" href="/_astro/__uno.CBJeq-UE.css">
+<link rel="stylesheet" href="/_astro/Layout.DBOqAoW0.css"><style>[data-astro-transition-scope="astro-wif6pdce-1"] { view-transition-name: site-title-zh; }@layer astro { ::view-transition-old(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }::view-transition-new(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back]::view-transition-old(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back]::view-transition-new(site-title-zh) { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; } }[data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition-fallback="old"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition-fallback="new"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }[data-astro-transition=back][data-astro-transition-fallback="old"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="old"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeOut; }[data-astro-transition=back][data-astro-transition-fallback="new"] [data-astro-transition-scope="astro-wif6pdce-1"],
+			[data-astro-transition=back][data-astro-transition-fallback="new"][data-astro-transition-scope="astro-wif6pdce-1"] { 
+	animation-duration: 180ms;
+	animation-timing-function: cubic-bezier(0.76, 0, 0.24, 1);
+	animation-fill-mode: both;
+	animation-name: astroFadeIn; }</style></head><body> <a href="#content" class="skip-link">跳到正文</a> <div class="mx-auto max-w-205.848 min-h-vh w-full min-h-dvh" p="x-[min(7.25vw,3.731rem)] y-10" lg="mx-[max(5.75rem,calc(50vw-34.25rem))] my-20 max-w-[min(calc(75vw-16rem),44rem)] min-h-full p-0"> <header class="lg:uno-desktop-column lg:top-20 cjk:tracking-wide mb-10.8"> <h2 class="font-bold font-title mb-2.8 mt-3 text-5.375 c-secondary lg:mb-1.8 lg:mt-0 lg:text-9 lg:c-primary">  <div class="box-content inline-block pr-1" data-disable-theme-toggle-transition data-astro-transition-scope="astro-wif6pdce-1"> <a id="site-title-link" href="/"> Danyow </a> </div> </h2> <div aria-hidden="true" class="text-3.5 c-secondary font-navbar lg:text-4 op-0 lg:op-100">技术在变，慢慢看。</div> </header><nav aria-label="主导航" class="mb-10.5 text-3.6 font-semibold leading-2.45em font-navbar lg:uno-desktop-column lg:text-4 lg:top-[calc(5rem+8rem)] cjk:tracking-wide"> <ul class="site-nav"> <li><a href="/" class="highlight-hover hover:c-primary after:bottom-0.7em">最新</a></li><li><a href="/ai-engine-watch/" aria-current="page" class="highlight-static c-primary font-bold after:bottom-0.7em">引擎日报</a></li><li><a href="/voice-agent-watch/" class="highlight-hover hover:c-primary after:bottom-0.7em">语音日报</a></li><li><a href="/note/" class="highlight-hover hover:c-primary after:bottom-0.7em">笔记</a></li><li><a href="/docs/" class="highlight-hover hover:c-primary after:bottom-0.7em">文档</a></li><li><a href="/gallery/" class="highlight-hover hover:c-primary after:bottom-0.7em">图集</a></li><li><a href="/archive/" class="highlight-hover hover:c-primary after:bottom-0.7em">归档</a></li><li><a href="/search/" class="highlight-hover hover:c-primary after:bottom-0.7em">搜索</a></li> <li><button id="theme-toggle" type="button" aria-label="切换为浅色" aria-pressed="false">浅色</button></li> </ul></nav><main id="content" class="mb-12"><article> <header class="article-header"><p class="edition">AI 引擎日报</p><h1>AI 引擎日报｜2026-11-25</h1><div class="entry-meta"><time datetime="2026-11-25">2026-11-25</time><span>北京时间</span></div></header>  <div class="heti" id="post-content"><p>今天的增量偏工程化：一边补齐从代理创作到发布后观察，另一边重做复杂玩法所需的物理底座。</p>
+<h2 id="今日重点">今日重点</h2>
+<p><strong>Genex 0.2.8把“做完游戏”向发布后运营推进。</strong> 新版加入单个游戏的安装、留存、事件漏斗和活动链接分析页，Godot可把Mac、Windows或Linux桌面导出交给Genex任务执行，并移除Unreal 5.9加载多人插件时的兼容确认。代码、安装包和测试说明已公开；但维护者明确写明分析服务端当时尚未升到生产环境，完整测试也未覆盖打包版Windows、Linux和可见Unreal编辑器。<a href="https://github.com/genex-games/genex-desktop/releases/tag/v0.2.8" rel="noopener noreferrer">Release（11-25，北京时间）</a> · <a href="https://github.com/genex-games/genex-desktop/pull/889" rel="noopener noreferrer">发布PR（11-25，北京时间）</a></p>
+<p><strong>Origin Engine重做破坏、地形与碰撞烹制。</strong> 爆炸可用实时碰撞体判断掩体遮挡，可破坏像素地形改用无缝折线，脱落碎块用复合凸碰撞体保留凹形与孔洞；模型还能选择单凸包或凸分解，并按内容哈希复用烹制结果。这对代理生成爆破、可挖地形和移动凹形物体更直接，但提交包含存档格式和参数语义变更，旧存档不能沿用，且仍只是主分支代码。<a href="https://github.com/originai-game/origin-engine/commit/fd84823ad6c5bc22487e244c834ad7978975585f" rel="noopener noreferrer">提交（11-25，北京时间）</a></p>
+<p><strong>同批代码也替换了更深层的物理模型。</strong> 软体与流体改为XPBD/PBF求解，车辆改成耦合车轮动力学，物理动画和静止姿态布娃娃也被重建；仓库同时加入确定性恢复和资产无关测试。它可能让代理更容易组合车辆、布料、液体和角色受击效果，但目前没有稳定版发布或外部项目复测，不能把主分支测试等同于商用品质。<a href="https://github.com/originai-game/origin-engine/commit/313c914b24f2c7ade38b945b971cceda4838a3c5" rel="noopener noreferrer">软体/流体（11-25）</a> · <a href="https://github.com/originai-game/origin-engine/commit/a840ba0c7583792ccf7fdaa101cc7bb4b174d2d3" rel="noopener noreferrer">车辆（11-25）</a> · <a href="https://github.com/originai-game/origin-engine/commit/a4da91b1f5ef080b6974d94a68d33b04b06afa87" rel="noopener noreferrer">布娃娃（11-25）</a></p>
+<p>我的判断：AI原生引擎的竞争正在从“代理能写代码”转向“能否发布、观察并稳定复现复杂玩法”。今天两项仍主要由项目自己的代码与测试支持。</p>
+<blockquote>
+<p>观察窗口：以上次确认成功研究后的新增为主，并回看近7天。来源：官网/仓库已查｜国内与中文已查，未选入低证据线索｜论文已查，无未重复的重大新增｜X仅公开搜索摘要，完整时间线覆盖受限。</p>
+</blockquote>
+</div>  <footer class="article-footer"><a href="/ai-engine-watch/">返回列表</a><a href="/ai-engine-watch/raw/2026/11/2026-11-25.md">Markdown 原稿</a><p class="version">修订 1 · <span>source-sha256:940f9b8f29697ed2044773c8671d68362e40ff4d4d2e145751a4a8edb136eee4</span></p></footer> </article></main><footer class="text-3 leading-1.25em font-navbar" lg="uno-desktop-column bottom-20 text-3.5"> <p>  <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" name="RSS" href="/rss.xml" target="_blank" rel="noopener noreferrer">RSS</a> / <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" name="GitHub" href="https://github.com/danyow/danyow" target="_blank" rel="noopener noreferrer">GitHub</a>  </p> <p>
+© 2019-2026 danyow </p> <p>
+Powered by <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a> and <a class="highlight-hover py-0.8 transition-colors after:bottom-0.35em hover:c-primary" href="https://github.com/radishzzz/astro-theme-retypeset" target="_blank" rel="noopener noreferrer">Retypeset</a> </p> </footer> </div> <script type="module">const t=document.getElementById("theme-toggle"),n=()=>{const e=document.documentElement.classList.contains("dark");t?.setAttribute("aria-label",e?"切换为浅色":"切换为暗色"),t?.setAttribute("aria-pressed",String(!e)),t&&(t.textContent=e?"浅色":"暗色")};n();t?.addEventListener("click",()=>{document.documentElement.classList.toggle("dark");try{localStorage.setItem("danyow-theme",document.documentElement.classList.contains("dark")?"dark":"light")}catch{}n()});</script> </body></html>
